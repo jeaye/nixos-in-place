@@ -1,0 +1,36 @@
+#!/bin/sh
+
+set -x
+set -e
+
+cp /etc/{external-,}resolv.conf
+nixos-generate-config --root /nixos
+
+cat <<EOF > /nixos/etc/nixos/configuration-additions.nix
+  boot.kernelParams = ["boot.shell_on_fail"];
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.storePath = "/nixos/nix/store";
+  boot.initrd.postDeviceCommands = ''
+    mkdir -p /mnt-root/old-root ;
+    mount -t ext4 /dev/sda1 /mnt-root/old-root ;
+  '';
+  fileSystems = {
+    "/" = {
+      device = "/old-root/nixos";
+      fsType = "none";
+      "options" = "bind";
+    };
+    "/old-root" = {
+      device = "/dev/sda1";
+      fsType = "ext4";
+    };
+  };
+}
+EOF
+mv /nixos/etc/nixos/{,backup-}configuration.nix
+head --lines=-1 /nixos/etc/nixos/backup-configuration.nix > /nixos/etc/nixos/configuration.nix
+cat /nixos/etc/nixos/configuration-additions.nix >> /nixos/etc/nixos/configuration.nix
+
+# TODO: Tweak hardware config to remove fileSystems
+exec bash
+#nixos-install --root /nixos
