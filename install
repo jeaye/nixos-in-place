@@ -4,6 +4,7 @@ set -e
 
 ## TODO: Input validation
 
+## TODO: Don't assume we're debian-based
 apt-get install -y squashfs-tools pcregrep
 
 iso=latest-iso-minimal-x86_64-linux
