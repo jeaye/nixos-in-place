@@ -2,7 +2,10 @@
 
 set -e
 
+## Enable host resolution
 cp /etc/{external-,}resolv.conf
+
+## Generate a base config
 nixos-generate-config --root /nixos
 
 cat <<EOF > /nixos/etc/nixos/configuration-additions.nix
@@ -27,11 +30,13 @@ cat <<EOF > /nixos/etc/nixos/configuration-additions.nix
 }
 EOF
 
+## Add in our configuration additions
 nixos_dir=/nixos/etc/nixos
 mv $nixos_dir/{,backup-}configuration.nix
 head --lines=-1 $nixos_dir/backup-configuration.nix > $nixos_dir/configuration.nix
 cat $nixos_dir/configuration-additions.nix >> $nixos_dir/configuration.nix
 
+## Remove the automatically-generated fileSystems configuration
 mv $nixos_dir/{,backup-}hardware-configuration.nix
 pcregrep -Mv "fileSystems.\"/\"[\s\S]*};" $nixos_dir/backup-hardware-configuration.nix > $nixos_dir/hardware-configuration.nix
 
