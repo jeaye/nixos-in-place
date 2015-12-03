@@ -26,10 +26,14 @@ cat <<EOF > /nixos/etc/nixos/configuration-additions.nix
   };
 }
 EOF
-mv /nixos/etc/nixos/{,backup-}configuration.nix
-head --lines=-1 /nixos/etc/nixos/backup-configuration.nix > /nixos/etc/nixos/configuration.nix
-cat /nixos/etc/nixos/configuration-additions.nix >> /nixos/etc/nixos/configuration.nix
 
-# TODO: Tweak hardware config to remove fileSystems
-exec bash
-#nixos-install --root /nixos
+nixos_dir=/nixos/etc/nixos
+mv $nixos_dir/{,backup-}configuration.nix
+head --lines=-1 $nixos_dir/backup-configuration.nix > $nixos_dir/configuration.nix
+cat $nixos_dir/configuration-additions.nix >> $nixos_dir/configuration.nix
+
+mv $nixos_dir/{,backup-}hardware-configuration.nix
+pcregrep -Mv "fileSystems.\"/\"[\s\S]*};" $nixos_dir/backup-hardware-configuration.nix > $nixos_dir/hardware-configuration.nix
+
+nixos-install --root /nixos
+exit

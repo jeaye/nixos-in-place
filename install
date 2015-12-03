@@ -4,7 +4,7 @@ set -e
 
 ## TODO: Input validation
 
-apt-get install -y squashfs-tools
+apt-get install -y squashfs-tools pcregrep
 
 iso=latest-iso-minimal-x86_64-linux
 if [ ! -e $iso ];
