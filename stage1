@@ -2,7 +2,7 @@
 
 set -e
 
-## For network
+## Enable networking
 cd host
 mkdir -p etc dev proc sys
 cp /etc/resolv.conf etc/external-resolv.conf
@@ -28,4 +28,5 @@ mount --bind /nixos nixos
 mkdir -p _drafts
 mount --bind /_drafts _drafts
 
+## Imbue the modified live CD environment so we can install
 chroot . /$INIT
