@@ -1,22 +1,8 @@
 #!/bin/sh
 
-set -x
 set -e
 
-#apt-get install -y squashfs-tools
-
-# TODO: If not already done
-#mkdir -p mnt host/nix
-#wget http://nixos.org/releases/nixos/latest-iso-minimal-x86_64-linux
-#modprobe loop
-#mount -o loop latest-iso-minimal-x86_64-linux mnt
-#unsquashfs -d host/nix/store mnt/nix-store.squashfs '*'
-
-# TODO: Just for dev
-rm -f latest-iso-minimal-x86_64-linux
-
 ## For network
-
 cd host
 mkdir -p etc dev proc sys
 cp /etc/resolv.conf etc/external-resolv.conf

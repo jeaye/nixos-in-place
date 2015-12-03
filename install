@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+## TODO: Input validation
+
+apt-get install -y squashfs-tools
+
+iso=latest-iso-minimal-x86_64-linux
+if [ ! -e $iso ];
+then
+  mkdir -p mnt host/nix
+  wget http://nixos.org/releases/nixos/$iso
+  modprobe loop
+  mount -o loop $iso mnt
+  unsquashfs -d host/nix/store mnt/nix-store.squashfs '*'
+fi
+
+# TODO: Just for dev
+rm -f latest-iso-minimal-x86_64-linux
+
+./stage1
