@@ -37,8 +37,9 @@ $ pacman -Sy squashfs-tools
 ```
 
 ## Thanks
-Both @lethalman and @cleverca22 were very helpful in getting this working.
-Muchas gracias.
+Both [lethalman](https://github.com/lethalman) and
+[cleverca22](https://github.com/cleverca22) were very helpful in getting this
+working.  Muchas gracias.
 
 ## Donate
 Feel free to shoot Bitcoins my way: **1HaMvpDjy7QJBDkcZALJr3s26FxLpv5WtJ**
