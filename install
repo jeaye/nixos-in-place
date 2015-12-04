@@ -8,7 +8,7 @@ set -e
 apt-get install -y squashfs-tools pcregrep
 
 iso=latest-iso-minimal-x86_64-linux
-if [ ! -e $iso ];
+if [ ! -e host/nixos/store ];
 then
   mkdir -p mnt host/nix
   wget http://nixos.org/releases/nixos/$iso
@@ -17,7 +17,7 @@ then
   unsquashfs -d host/nix/store mnt/nix-store.squashfs '*'
 fi
 
-# TODO: Just for dev
+## Save one space
 rm -f latest-iso-minimal-x86_64-linux
 
 ./stage1
