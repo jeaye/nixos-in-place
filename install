@@ -87,7 +87,4 @@ $here/stage1 $here
 ## Installation is complete
 read -p "reboot into NixOS now? [yn] " -n 1 -r
 echo
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-  reboot
-fi
+[[ $REPLY =~ ^[Yy]$ ]] && reboot
