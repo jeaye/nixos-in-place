@@ -73,7 +73,7 @@ fi
 pushd $working_directory
   log "Downloading NixOS $iso"
   mkdir -p mnt host/nix
-  curl -# http://nixos.org/releases/nixos/$iso
+  wget -q --show-progress http://nixos.org/releases/nixos/$iso
 
   log "Extracting ISO"
   modprobe loop
