@@ -37,7 +37,7 @@ $ pacman -Sy squashfs-tools
 ```
 
 ## Donate
-Feel free to shoot bitcoins my way:
-[1HaMvpDjy7QJBDkcZALJr3s26FxLpv5WtJ](bitcoin:1HaMvpDjy7QJBDkcZALJr3s26FxLpv5WtJ)
+Feel free to shoot Bitcoins my way: **1HaMvpDjy7QJBDkcZALJr3s26FxLpv5WtJ**
+
 For more information regarding how I use donations, see
 [here](http://jeaye.com/donate/).
