@@ -23,8 +23,9 @@ root_mount=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
 root_type=$(mount | grep -Eo "/ type \w+" | sed 's/ /\n/g' | tail -n1)
 grub_device=$(echo $root_mount | sed "s|[0-9]\+||")
 iso=latest-iso-minimal-x86_64-linux
+working_directory=$(mktemp -d)
 
-while getopts ":g:r:t:Gh" opt; do
+while getopts ":g:r:t:Gw:h" opt; do
   case $opt in
     g)
       grub_device=$OPTARG
@@ -37,6 +38,9 @@ while getopts ":g:r:t:Gh" opt; do
       ;;
     G)
       iso=latest-iso-graphical-x86_64-linux
+      ;;
+    w)
+      working_directory=$OPTARG
       ;;
     h)
       show_help $0
@@ -67,27 +71,26 @@ then
 fi
 exit
 
-log_start "Checking for NixOS squashfs... "
-if [ ! -d host/nix/store ];
-then
-  log_end "not found"
+pushd $working_directory
+  log "Downloading NixOS $iso"
   mkdir -p mnt host/nix
   curl -# http://nixos.org/releases/nixos/$iso
+
+  log "Extracting ISO"
   modprobe loop
   mount -o loop $iso mnt
   unsquashfs -d host/nix/store mnt/nix-store.squashfs '*'
-else
-  log_end "host/nix/store"
-fi
 
-## Save one space
-rm -f $iso
+  ## Save one space
+  rm -f $iso
 
-## Setup the chroot environment before install
-log "Embarking stage1!"
-$here/stage1 $here $root_mount $root_type $grub_device
+  ## Setup the chroot environment before install
+  log "Embarking stage1!"
+  $here/stage1 $here $root_mount $root_type $grub_device
 
-## TODO: Clean up mounts
+  ## TODO: Clean up mounts
+  log "Cleaning up mounts"
+popd
 
 ## Installation is complete
 log_start "Reboot into NixOS now? [yn] "
