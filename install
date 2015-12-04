@@ -16,14 +16,21 @@ check_existence "curl"
 check_existence "sed"
 check_existence "grep"
 #check_existence "unsquashfs"
+check_existence "mktemp"
 log_end "seems sane"
 
 ## Setup essential variables; allow overriding with input
 root_mount=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
 root_type=$(mount | grep -Eo "/ type \w+" | sed 's/ /\n/g' | tail -n1)
 grub_device=$(echo $root_mount | sed "s|[0-9]\+||")
-iso=latest-iso-minimal-x86_64-linux
 working_directory=$(mktemp -d)
+
+## Try to work out which architecture to use
+set +e
+  arch=$(uname -a | grep -o "x86_64")
+set -e
+[ ! "$arch" = "x86_64" ] && arch=i686
+iso=latest-iso-minimal-$arch-linux
 
 while getopts ":g:r:t:Gw:h" opt; do
   case $opt in
