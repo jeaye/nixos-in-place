@@ -110,7 +110,8 @@ pushd $working_directory
   log "Extracting ISO"
   modprobe loop
   mount -o loop $iso mnt
-  unsquashfs -d host/nix/store mnt/nix-store.squashfs '*'
+    unsquashfs -d host/nix/store mnt/nix-store.squashfs '*'
+  umount mnt
 
   ## Save one space
   rm -f ./$iso
@@ -120,7 +121,7 @@ pushd $working_directory
   $here/stage1 $here $root_mount $root_type $grub_device
 
   ## Minimize residual space usage
-  rm -rf ./mnt host
+  rm -rf ./mnt ./host
 popd
 
 ## Installation is complete

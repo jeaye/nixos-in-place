@@ -47,4 +47,4 @@ log "Embarking stage2!"
 chroot . /$INIT
 
 log "Cleaning up mounts"
-umount -fR mnt host nixos nixos-in-place
+umount -fR nixos nixos-in-place
