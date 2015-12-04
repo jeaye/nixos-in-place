@@ -44,5 +44,6 @@ cat $nixos_dir/configuration-additions.nix >> $nixos_dir/configuration.nix
 mv $nixos_dir/{,backup-}hardware-configuration.nix
 pcregrep -Mv "fileSystems.\"/\"[\s\S]*};" $nixos_dir/backup-hardware-configuration.nix > $nixos_dir/hardware-configuration.nix
 
+## Installs grub and a base NixOS system; after a reboot, we're golden
 nixos-install --root /nixos
 exit

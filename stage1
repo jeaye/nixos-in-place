@@ -22,6 +22,7 @@ sed -i "s,exec systemd,exec /$BASH -i /nix-in-place/stage2," $INIT
 ## Don't try to remount / since we didn't do a proper phase 1
 sed -i "s|mount -n -o remount,rw none /|echo 'not remounting /'|" $INIT
 
+## The chroot will install outside of itself, into the main system
 mkdir -p /nixos nixos
 mount --bind /nixos nixos
 
