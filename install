@@ -40,3 +40,5 @@ rm -f latest-iso-minimal-x86_64-linux
 
 ## Setup the chroot environment before install
 $here/stage1 $here
+
+## Installation is complete; TODO: ask them to reboot
