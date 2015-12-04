@@ -47,6 +47,7 @@ while getopts ":g:r:t:Gw:h" opt; do
       ;;
     G)
       iso=latest-iso-graphical-$arch-linux
+      required_space=9
       ;;
     w)
       working_directory=$OPTARG
