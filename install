@@ -2,8 +2,10 @@
 
 set -eu
 
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 ## Bring in some helper functions
-source ./util
+source $here/util
 
 ## Sanity-check
 check_existence "mount"
@@ -54,8 +56,6 @@ then
   echo "exiting; nothing was harmed"
   exit 1
 fi
-
-here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 iso=latest-iso-minimal-x86_64-linux
 if [ ! -d host/nix/store ];
