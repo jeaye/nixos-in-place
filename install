@@ -22,7 +22,6 @@ check_existence "mount"
 check_existence "modprobe"
 check_existence "chroot"
 check_existence "curl"
-check_existence "pcregrep"
 check_existence "unsquashfs"
 
 iso=latest-iso-minimal-x86_64-linux

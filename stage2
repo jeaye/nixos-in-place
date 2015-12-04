@@ -5,6 +5,9 @@ set -eu
 ## Enable host resolution
 cp /etc/{external-,}resolv.conf
 
+## Install dependencies
+nix-env -i pcre
+
 ## Generate a base config
 nixos-generate-config --root /nixos
 
