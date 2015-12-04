@@ -2,19 +2,10 @@
 
 set -eu
 
-function check_existence
-{
-  printf "Checking for $1... "
-  which $1 > /dev/null 2>&1
-  exists=$?
-  if [ "$exists" -eq "0" ];
-  then
-    echo "found" 1>&2
-  else
-    echo "not found; see the README" 1>&2
-    exit 1
-  fi
-}
+## Bring in some helper functions
+source ./util
+
+## Sanity-check
 check_existence "mount"
 check_existence "modprobe"
 check_existence "chroot"
@@ -28,7 +19,7 @@ root_mount=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
 root_type=$(mount | grep -Eo "/ type \w+" | sed 's/ /\n/g' | tail -n1)
 grub_device=$(echo $root_mount | sed "s|[0-9]\+||")
 
-while getopts ":g:r:t:" opt; do
+while getopts ":g:r:t:h" opt; do
   case $opt in
     g)
       grub_device=$OPTARG
@@ -38,6 +29,9 @@ while getopts ":g:r:t:" opt; do
       ;;
     t)
       root_type=$OPTARG
+      ;;
+    h)
+      show_help $0
       ;;
     \?)
       echo "ERROR invalid option: -$OPTARG" >&2
@@ -60,9 +54,6 @@ then
   echo "exiting; nothing was harmed"
   exit 1
 fi
-
-echo "running"
-exit
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 

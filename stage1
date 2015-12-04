@@ -20,7 +20,7 @@ BASH=$(find . -type f -path '*/bin/bash' | tail -n 1)
 echo "BASH=$BASH"
 
 ## Don't run systemd on chroot start, run our stage2 script
-sed -i "s,exec systemd,exec /$BASH -i /nix-in-place/stage2 $root_mount $root_type $grub_device," $INIT
+sed -i "s,exec systemd,exec /$BASH -i /nixos-in-place/stage2 $root_mount $root_type $grub_device," $INIT
 
 ## Don't try to remount / since we didn't do a proper phase 1
 sed -i "s|mount -n -o remount,rw none /|echo 'not remounting /'|" $INIT
@@ -30,8 +30,8 @@ mkdir -p /nixos nixos
 mount --bind /nixos nixos
 
 ## Allow stage2 to access these scripts
-mkdir -p nix-in-place
-mount --bind $here nix-in-place
+mkdir -p nixos-in-place
+mount --bind $here nixos-in-place
 
 ## Imbue the modified live CD environment so we can install
 chroot . /$INIT

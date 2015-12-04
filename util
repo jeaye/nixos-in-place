@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -eu
+
+function check_existence
+{
+  set +e
+  which $1 > /dev/null 2>&1
+  exists=$?
+  if [ ! "$exists" -eq "0" ];
+  then
+    echo "$1 not found; see the README for dependencies" 1>&2
+    exit 1
+  fi
+  set -e
+}
+
+function show_help
+{
+  echo "usage: $0 [OPTION...]"
+  echo
+  echo "  -h  Show this help message"
+  echo "  -g  Set GRUB target device (default: $grub_device)"
+  echo "  -r  Set root filesystem target device (default: $root_mount)"
+  echo "  -t  Set root filesystem type (default: $root_type)"
+  exit 1
+}
