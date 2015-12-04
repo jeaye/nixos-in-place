@@ -27,26 +27,40 @@ check_existence "grep"
 root_mount=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
 root_device=$(echo $root_mount | sed "s|[0-9]\+||")
 root_partition=$(echo $root_mount | grep -Eo "[0-9]+")
-echo $root_partition
-echo $root_device
-exit
+root_type=$(mount | grep -Eo "/ type \w+" | sed 's/ /\n/g' | tail -n1)
 
-while getopts ":d:" opt; do
+while getopts ":d:p:t:" opt; do
   case $opt in
     d)
-      echo "-a was triggered, Parameter: $OPTARG" >&2
       root_device=$OPTARG
       ;;
+    p)
+      root_partition=$OPTARG
+      ;;
+    t)
+      root_type=$OPTARG
+      ;;
     \?)
-      echo "invalid option: -$OPTARG" >&2
+      echo "ERROR invalid option: -$OPTARG" >&2
       exit 1
       ;;
     :)
-      echo "option -$OPTARG requires an argument." >&2
+      echo "ERROR option -$OPTARG requires an argument." >&2
       exit 1
       ;;
   esac
 done
+
+read -p "Installing NixOS into $root_device$root_partition ($root_type); continue? [yn] " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+  echo "not running"
+  exit 1
+fi
+
+echo "running"
+exit
 
 ## TODO: Input validation
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
