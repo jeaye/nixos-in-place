@@ -7,6 +7,9 @@ root_mount=$2
 root_type=$3
 grub_device=$4
 
+## Bring in some helper functions
+. $here/util
+
 ## Enable networking
 log "Setting up chroot networking"
 cd host
