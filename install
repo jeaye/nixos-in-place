@@ -20,26 +20,29 @@ check_existence "modprobe"
 check_existence "chroot"
 check_existence "curl"
 check_existence "sed"
+check_existence "grep"
 #check_existence "unsquashfs"
 
 ## Setup essential variables; allow overriding with input
-root_partition=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
-root_device=$(echo $root_partition | sed "s|[0-9]\+||")
+root_mount=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
+root_device=$(echo $root_mount | sed "s|[0-9]\+||")
+root_partition=$(echo $root_mount | grep -Eo "[0-9]+")
 echo $root_partition
 echo $root_device
 exit
 
-while getopts ":a:" opt; do
+while getopts ":d:" opt; do
   case $opt in
-    a)
+    d)
       echo "-a was triggered, Parameter: $OPTARG" >&2
+      root_device=$OPTARG
       ;;
     \?)
-      echo "Invalid option: -$OPTARG" >&2
+      echo "invalid option: -$OPTARG" >&2
       exit 1
       ;;
     :)
-      echo "Option -$OPTARG requires an argument." >&2
+      echo "option -$OPTARG requires an argument." >&2
       exit 1
       ;;
   esac
