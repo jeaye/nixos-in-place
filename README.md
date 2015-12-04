@@ -29,13 +29,3 @@ into `/old-root`, you can; you just need to add the Grub entry manually.
 ```bash
 $ [sudo] apt-get install -y squashfs-tools
 ```
-
-TODO:
-  describe the steps in the readme
-  test on several distros
-  list out the dependencies for each distro
-  add grub entry to boot previous distro (before stage2)
-  check for available memory; warn (prompt) if it looks like too little
-  find out how much memory it actually uses
-    minimal: 3GB
-  clean up mounts
