@@ -36,6 +36,10 @@ $ apt-get install -y squashfs-tools
 $ pacman -Sy squashfs-tools
 ```
 
+## Thanks
+Both @lethalman and @cleverca22 were very helpful in getting this working.
+Muchas gracias.
+
 ## Donate
 Feel free to shoot Bitcoins my way: **1HaMvpDjy7QJBDkcZALJr3s26FxLpv5WtJ**
 
