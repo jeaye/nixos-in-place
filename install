@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -eu
 
 ## TODO: Input validation
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
