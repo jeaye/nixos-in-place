@@ -84,4 +84,10 @@ $here/stage1 $here
 
 ## TODO: Clean up mounts
 
-## Installation is complete; TODO: ask them to reboot
+## Installation is complete
+read -p "reboot into NixOS now? [yn] " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  reboot
+fi
