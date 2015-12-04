@@ -28,10 +28,10 @@ into `/old-root`, you can; you just need to add the Grub entry manually.
 ## Dependencies
 ### Debian-based (including Ubuntu)
 ```bash
-$ [sudo] apt-get install -y squashfs-tools
+$ apt-get install -y squashfs-tools
 ```
 
 ### Arch
 ```bash
-$ [sudo] pacman -Sy squashfs-tools
+$ pacman -Sy squashfs-tools
 ```
