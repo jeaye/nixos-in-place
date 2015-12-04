@@ -21,7 +21,7 @@ check_existence "pcregrep"
 check_existence "unsquashfs"
 
 iso=latest-iso-minimal-x86_64-linux
-if [ ! -e host/nixos/store ];
+if [ ! -d host/nix/store ];
 then
   mkdir -p mnt host/nix
   wget http://nixos.org/releases/nixos/$iso
