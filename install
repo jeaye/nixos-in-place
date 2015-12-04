@@ -27,7 +27,7 @@ working_directory=$(mktemp -d)
 
 ## Try to work out which architecture to use
 set +e
-  arch=$(uname -a | grep -o "x86_64")
+  arch=$(uname -a | grep -o "x86_64" | head -n1)
 set -e
 [ ! "$arch" = "x86_64" ] && arch=i686
 iso=latest-iso-minimal-$arch-linux
