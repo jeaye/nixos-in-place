@@ -25,8 +25,8 @@ check_existence "grep"
 
 ## Setup essential variables; allow overriding with input
 root_mount=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
-grub_device=$(echo $root_mount | sed "s|[0-9]\+||")
 root_type=$(mount | grep -Eo "/ type \w+" | sed 's/ /\n/g' | tail -n1)
+grub_device=$(echo $root_mount | sed "s|[0-9]\+||")
 
 while getopts ":g:r:t:" opt; do
   case $opt in
@@ -80,7 +80,7 @@ fi
 rm -f latest-iso-minimal-x86_64-linux
 
 ## Setup the chroot environment before install
-$here/stage1 $here
+$here/stage1 $here $root_mount $root_type $grub_device
 
 ## TODO: Clean up mounts
 

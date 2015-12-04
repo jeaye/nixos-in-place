@@ -3,6 +3,9 @@
 set -eu
 
 here=$1
+root_mount=$2
+root_type=$3
+grub_device=$4
 
 ## Enable networking
 cd host
@@ -17,7 +20,7 @@ BASH=$(find . -type f -path '*/bin/bash' | tail -n 1)
 echo "BASH=$BASH"
 
 ## Don't run systemd on chroot start, run our stage2 script
-sed -i "s,exec systemd,exec /$BASH -i /nix-in-place/stage2," $INIT
+sed -i "s,exec systemd,exec /$BASH -i /nix-in-place/stage2 $root_mount $root_type $grub_device," $INIT
 
 ## Don't try to remount / since we didn't do a proper phase 1
 sed -i "s|mount -n -o remount,rw none /|echo 'not remounting /'|" $INIT

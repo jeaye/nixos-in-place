@@ -2,6 +2,10 @@
 
 set -eu
 
+root_mount=$1
+root_type=$2
+grub_device=$3
+
 ## Enable host resolution
 cp /etc/{external-,}resolv.conf
 
@@ -14,11 +18,11 @@ nixos-generate-config --root /nixos
 
 cat <<EOF > /nixos/etc/nixos/configuration-additions.nix
   boot.kernelParams = ["boot.shell_on_fail"];
-  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.device = "$grub_device";
   boot.loader.grub.storePath = "/nixos/nix/store";
   boot.initrd.postDeviceCommands = ''
     mkdir -p /mnt-root/old-root ;
-    mount -t ext4 /dev/sda1 /mnt-root/old-root ;
+    mount -t $root_type $root_mount /mnt-root/old-root ;
   '';
   fileSystems = {
     "/" = {
@@ -27,8 +31,8 @@ cat <<EOF > /nixos/etc/nixos/configuration-additions.nix
       "options" = "bind";
     };
     "/old-root" = {
-      device = "/dev/sda1";
-      fsType = "ext4";
+      device = "$root_mount";
+      fsType = "$root_type";
     };
   };
 }
