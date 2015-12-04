@@ -45,3 +45,6 @@ mount --bind $here nixos-in-place
 ## Imbue the modified live CD environment so we can install
 log "Embarking stage2!"
 chroot . /$INIT
+
+log "Cleaning up mounts"
+umount -fR mnt host nixos nixos-in-place

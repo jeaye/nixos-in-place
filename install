@@ -112,14 +112,14 @@ pushd $working_directory
   unsquashfs -d host/nix/store mnt/nix-store.squashfs '*'
 
   ## Save one space
-  rm -f $iso
+  rm -f ./$iso
 
   ## Setup the chroot environment before install
   log "Embarking stage1!"
   $here/stage1 $here $root_mount $root_type $grub_device
 
-  ## TODO: Clean up mounts
-  log "Cleaning up mounts"
+  ## Minimize residual space usage
+  rm -rf ./mnt host
 popd
 
 ## Installation is complete
