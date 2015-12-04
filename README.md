@@ -4,7 +4,8 @@ distribution.
 
 ## How to do it
 0. **BACKUP**
-1. Install the dependencies
+1. Install the
+   [dependencies](https://github.com/jeaye/nixos-in-place#dependencies)
 2. Run the following (see `./install -h` for options)
 ```bash
 $ ./install
@@ -34,3 +35,8 @@ $ apt-get install -y squashfs-tools
 ```bash
 $ pacman -Sy squashfs-tools
 ```
+
+## Donate
+Feel free to shoot bitcoins my way:
+[1HaMvpDjy7QJBDkcZALJr3s26FxLpv5WtJ](bitcoin:1HaMvpDjy7QJBDkcZALJr3s26FxLpv5WtJ)
+For more information, see [here](http://jeaye.com/donate/).
