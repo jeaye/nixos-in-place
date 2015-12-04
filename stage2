@@ -5,7 +5,8 @@ set -eu
 ## Enable host resolution
 cp /etc/{external-,}resolv.conf
 
-## Install dependencies
+## Install dependencies; it's easier to do this here, in the Nix chroot,
+## since we don't rely on the host system.
 nix-env -i pcre
 
 ## Generate a base config
