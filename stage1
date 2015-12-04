@@ -8,18 +8,22 @@ root_type=$3
 grub_device=$4
 
 ## Enable networking
+log "Setting up chroot networking"
 cd host
 mkdir -p etc dev proc sys
 cp /etc/resolv.conf etc/external-resolv.conf
 for fn in dev proc sys; do mount --bind /$fn $fn; done
 
 ## Patch the ISO for local chroot
+log_start "Looking for NixOS init... "
 INIT=$(find . -type f -path '*nixos*/init')
-log "INIT=$INIT"
+log_end "$INIT"
+log_start "Looking for NixOS bash... "
 BASH=$(find . -type f -path '*/bin/bash' | tail -n 1)
-log "BASH=$BASH"
+log_end "$BASH"
 
 ## Don't run systemd on chroot start, run our stage2 script
+log "Patching init"
 sed -i "s,exec systemd,exec /$BASH -i /nixos-in-place/stage2 $root_mount $root_type $grub_device," $INIT
 sed -i "s,starting systemd,starting /nixos-in-place/stage2," $INIT
 
@@ -27,6 +31,7 @@ sed -i "s,starting systemd,starting /nixos-in-place/stage2," $INIT
 sed -i "s|mount -n -o remount,rw none /|echo 'not remounting /'|" $INIT
 
 ## The chroot will install outside of itself, into the main system
+log "Binding remaining environment"
 mkdir -p /nixos nixos
 mount --bind /nixos nixos
 
@@ -35,4 +40,5 @@ mkdir -p nixos-in-place
 mount --bind $here nixos-in-place
 
 ## Imbue the modified live CD environment so we can install
+log "Embarking stage2!"
 chroot . /$INIT
