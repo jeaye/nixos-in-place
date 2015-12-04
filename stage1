@@ -32,3 +32,10 @@ mount --bind $here nix-in-place
 
 ## Imbue the modified live CD environment so we can install
 chroot . /$INIT
+
+read -p "reboot into NixOS now? [yn] " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+  reboot
+fi
