@@ -4,8 +4,21 @@ set -e
 
 ## TODO: Input validation
 
-## TODO: Don't assume we're debian-based
-apt-get install -y squashfs-tools pcregrep
+function check_existence
+{
+  printf "Checking for $1... "
+  which $1 > /dev/null 2>&1
+  exists=$?
+  if [ "$exists" -eq "0" ];
+  then
+    echo "found" 1>&2
+  else
+    echo "not found; see the README" 1>&2
+    exit 1
+  fi
+}
+check_existence "pcregrep"
+check_existence "unsquashfs"
 
 iso=latest-iso-minimal-x86_64-linux
 if [ ! -e host/nixos/store ];
