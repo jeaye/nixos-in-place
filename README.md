@@ -8,7 +8,7 @@ distribution.
 2. Run the following (see `./install -h` for options)
 ```bash
 # As root!
-./install
+$ ./install
 ```
 3. Hit `y` to verify the installation
 4. Grab some coffee while NixOS installs
