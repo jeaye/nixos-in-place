@@ -32,6 +32,7 @@ set +e
 set -e
 [ ! "$arch" = "x86_64" ] && arch=i686
 iso=latest-iso-minimal-$arch-linux
+required_space=3
 
 while getopts ":g:r:t:Gw:h" opt; do
   case $opt in
@@ -45,7 +46,7 @@ while getopts ":g:r:t:Gw:h" opt; do
       root_type=$OPTARG
       ;;
     G)
-      iso=latest-iso-graphical-x86_64-linux
+      iso=latest-iso-graphical-$arch-linux
       ;;
     w)
       working_directory=$OPTARG
@@ -67,6 +68,21 @@ done
 if [ "$(id -u)" != "0" ]; then
   log "You need to be root to do this"
   exit 1
+fi
+
+space=$(df -B 1G $PWD | tail -n1 | sed 's/ \+/ /g' | cut -d' ' -f4)
+if [ $space -lt $required_space ];
+then
+  log "WARNING: It *looks* like you don't have enough space for the install"
+  log "You need ~3GB for the minimal ISO and ~9GB for the graphical ISO"
+  log_start "Continue anyway? [yn] "
+  read -n 1 -r
+  log_end
+  if [[ ! $REPLY =~ ^[Yy]$ ]]
+  then
+    log "Exiting; nothing was harmed"
+    exit 1
+  fi
 fi
 
 ## Give one last chance to back out
