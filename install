@@ -8,6 +8,7 @@ here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source $here/util
 
 ## Sanity-check
+log_start "Checking environment... "
 check_existence "mount"
 check_existence "modprobe"
 check_existence "chroot"
@@ -15,6 +16,7 @@ check_existence "curl"
 check_existence "sed"
 check_existence "grep"
 #check_existence "unsquashfs"
+log_end "seems sane"
 
 ## Setup essential variables; allow overriding with input
 root_mount=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
@@ -50,28 +52,33 @@ done
 log_start "Installing NixOS into $root_mount ($root_type) \
 and GRUB into $grub_device; continue? [yn] "
 read -n 1 -r
-echo
+log_end
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
-  log "exiting; nothing was harmed"
+  log "Exiting; nothing was harmed"
   exit 1
 fi
 exit
 
+log "Checking for NixOS squashfs... "
 iso=latest-iso-minimal-x86_64-linux
 if [ ! -d host/nix/store ];
 then
+  log_end "not found"
   mkdir -p mnt host/nix
   curl -# http://nixos.org/releases/nixos/$iso
   modprobe loop
   mount -o loop $iso mnt
   unsquashfs -d host/nix/store mnt/nix-store.squashfs '*'
+else
+  log_end "found at host/nix/store"
 fi
 
 ## Save one space
 rm -f latest-iso-minimal-x86_64-linux
 
 ## Setup the chroot environment before install
+log "Embarking stage1!"
 $here/stage1 $here $root_mount $root_type $grub_device
 
 ## TODO: Clean up mounts
@@ -79,5 +86,5 @@ $here/stage1 $here $root_mount $root_type $grub_device
 ## Installation is complete
 log_start "Reboot into NixOS now? [yn] "
 read -n 1 -r
-echo
+log_end
 [[ $REPLY =~ ^[Yy]$ ]] && reboot
