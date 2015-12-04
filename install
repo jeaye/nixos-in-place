@@ -2,9 +2,6 @@
 
 set -eu
 
-## TODO: Input validation
-here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 function check_existence
 {
   printf "Checking for $1... "
@@ -23,7 +20,33 @@ check_existence "modprobe"
 check_existence "chroot"
 check_existence "curl"
 check_existence "sed"
-check_existence "unsquashfs"
+#check_existence "unsquashfs"
+
+## Setup essential variables; allow overriding with input
+root_partition=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
+root_device=$(echo $root_partition | sed "s|[0-9]\+||")
+echo $root_partition
+echo $root_device
+exit
+
+while getopts ":a:" opt; do
+  case $opt in
+    a)
+      echo "-a was triggered, Parameter: $OPTARG" >&2
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+## TODO: Input validation
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 iso=latest-iso-minimal-x86_64-linux
 if [ ! -d host/nix/store ];
