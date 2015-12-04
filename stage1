@@ -21,6 +21,7 @@ echo "BASH=$BASH"
 
 ## Don't run systemd on chroot start, run our stage2 script
 sed -i "s,exec systemd,exec /$BASH -i /nixos-in-place/stage2 $root_mount $root_type $grub_device," $INIT
+sed -i "s,starting systemd,starting /nixos-in-place/stage2," $INIT
 
 ## Don't try to remount / since we didn't do a proper phase 1
 sed -i "s|mount -n -o remount,rw none /|echo 'not remounting /'|" $INIT
