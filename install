@@ -81,7 +81,7 @@ else
 fi
 
 ## Save one space
-rm -f latest-iso-minimal-x86_64-linux
+rm -f $iso
 
 ## Setup the chroot environment before install
 log "Embarking stage1!"
