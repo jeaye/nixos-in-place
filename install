@@ -58,9 +58,8 @@ then
   log "Exiting; nothing was harmed"
   exit 1
 fi
-exit
 
-log "Checking for NixOS squashfs... "
+log_start "Checking for NixOS squashfs... "
 iso=latest-iso-minimal-x86_64-linux
 if [ ! -d host/nix/store ];
 then
