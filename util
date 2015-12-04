@@ -23,6 +23,7 @@ show_help()
   log "  -g  Set GRUB target device (default: $grub_device)"
   log "  -r  Set root filesystem target device (default: $root_mount)"
   log "  -t  Set root filesystem type (default: $root_type)"
+  log "  -G  Use the graphical NixOS ISO (default: $iso)"
   exit 1
 }
 
