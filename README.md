@@ -12,3 +12,5 @@ TODO:
   describe the steps in the readme
   test on several distros
   list out the dependencies for each distro
+  allow specifying the working dir; go to /tmp, by default
+  add grub entry to boot previous distro (after stage2)
