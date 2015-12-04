@@ -57,7 +57,7 @@ while getopts ":g:r:t:Gw:h" opt; do
 done
 
 ## Give one last chance to back out
-log "NixOS installer (nix-in-place)"
+log "NixOS installer (nixos-in-place)"
 log "   GRUB => $grub_device"
 log "   Root => $root_mount ($root_type)"
 log "   ISO => $iso"
@@ -69,7 +69,6 @@ then
   log "Exiting; nothing was harmed"
   exit 1
 fi
-exit
 
 pushd $working_directory
   log "Downloading NixOS $iso"
