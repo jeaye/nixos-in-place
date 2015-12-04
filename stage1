@@ -15,9 +15,9 @@ for fn in dev proc sys; do mount --bind /$fn $fn; done
 
 ## Patch the ISO for local chroot
 INIT=$(find . -type f -path '*nixos*/init')
-echo "INIT=$INIT"
+log "INIT=$INIT"
 BASH=$(find . -type f -path '*/bin/bash' | tail -n 1)
-echo "BASH=$BASH"
+log "BASH=$BASH"
 
 ## Don't run systemd on chroot start, run our stage2 script
 sed -i "s,exec systemd,exec /$BASH -i /nixos-in-place/stage2 $root_mount $root_type $grub_device," $INIT

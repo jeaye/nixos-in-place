@@ -36,26 +36,27 @@ while getopts ":g:r:t:h" opt; do
       show_help $0
       ;;
     \?)
-      echo "ERROR invalid option: -$OPTARG" >&2
+      log "ERROR invalid option: -$OPTARG" >&2
       exit 1
       ;;
     :)
-      echo "ERROR option -$OPTARG requires an argument." >&2
+      log "ERROR option -$OPTARG requires an argument." >&2
       exit 1
       ;;
   esac
 done
 
 ## Give one last chance to back out
-read -p \
-"Installing NixOS into $root_mount ($root_type) and GRUB into $grub_device;
-continue? [yn] " -n 1 -r
+log_start "Installing NixOS into $root_mount ($root_type) \
+and GRUB into $grub_device; continue? [yn] "
+read -n 1 -r
 echo
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
-  echo "exiting; nothing was harmed"
+  log "exiting; nothing was harmed"
   exit 1
 fi
+exit
 
 iso=latest-iso-minimal-x86_64-linux
 if [ ! -d host/nix/store ];
@@ -76,6 +77,7 @@ $here/stage1 $here $root_mount $root_type $grub_device
 ## TODO: Clean up mounts
 
 ## Installation is complete
-read -p "reboot into NixOS now? [yn] " -n 1 -r
+log_start "Reboot into NixOS now? [yn] "
+read -n 1 -r
 echo
 [[ $REPLY =~ ^[Yy]$ ]] && reboot
