@@ -13,4 +13,3 @@ TODO:
   check for available memory; warn (prompt) if it looks like too little
   find out how much memory it actually uses
   test /dev/disk/by-id
-  check for x64 and download the right ISO
