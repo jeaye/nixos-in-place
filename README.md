@@ -36,6 +36,23 @@ $ apt-get install -y squashfs-tools
 $ pacman -Sy squashfs-tools
 ```
 
+## How it works
+The provided `install` script will verify your system is sane, allow you to
+configure some options, and then pull down the latest ISO from NixOS. It them
+enters Stage 1.
+
+### Stage 1
+Once we have the NixOS live CD ISO, we mount is locally and modify it. The
+modifications enable us to imbue the image with a chroot that runs Stage 2.
+Before we chroot, we bind in a number of the host's devices and files into the
+chroot environment to ensure that functionality like networking will work.
+
+### Stage 2
+Once we're in the NixOS live CD chroot, we modify the NixOS configs to convey
+that it's not a typical setup. After that, we install to `/nixos`, which is
+bound to the host's `/nixos`. NixOS then installs Grub and we're good to reboot
+into our new machine!
+
 ## Thanks
 Both [lethalman](https://github.com/lethalman) and
 [cleverca22](https://github.com/cleverca22) were very helpful in getting this
