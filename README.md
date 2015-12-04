@@ -7,7 +7,6 @@ distribution.
 1. Install the dependencies
 2. Run the following (see `./install -h` for options)
 ```bash
-# As root!
 $ ./install
 ```
 3. Hit `y` to verify the installation
