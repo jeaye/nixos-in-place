@@ -73,6 +73,8 @@ fi
 pushd $working_directory
   log "Downloading NixOS $iso"
   mkdir -p mnt host/nix
+  # TODO: only for dev
+  ln -s /nix-in-place/$iso .
   wget -qc --show-progress http://nixos.org/releases/nixos/$iso
 
   log "Extracting ISO"
