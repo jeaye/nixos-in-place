@@ -25,12 +25,13 @@ else in `/old-root` is fair game to delete.
 NixOS installs Grub2 on top of your existing boot loader. If you'd like to boot
 into `/old-root`, you can; you just need to add the Grub entry manually.
 
-## Debian-based (including Ubuntu)
+## Dependencies
+### Debian-based (including Ubuntu)
 ```bash
 $ [sudo] apt-get install -y squashfs-tools
 ```
 
-## Arch
+### Arch
 ```bash
 $ [sudo] pacman -Sy squashfs-tools
 ```
