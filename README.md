@@ -30,13 +30,13 @@ into `/old-root`, you can; you just need to add the GRUB entry manually.
 
 ## Platform-specifics
 ### Ubuntu 15.10
-See [LVM](https://github.com/jeaye/nixos-in-place#LVM).
+See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
 $ apt-get install -y squashfs-tools
 ```
 
 ### Debian 8.2
-See [LVM](https://github.com/jeaye/nixos-in-place#LVM).
+See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
 $ apt-get install -y squashfs-tools
 ```
@@ -48,13 +48,13 @@ $ pacman -Sy wget squashfs-tools
 ```
 
 ### CentOS 7
-See [LVM](https://github.com/jeaye/nixos-in-place#LVM).
+See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
 $ yum install wget squashfs-tools
 ```
 
 ### Fedora 23
-See [LVM](https://github.com/jeaye/nixos-in-place#LVM) and
+See [LVM](https://github.com/jeaye/nixos-in-place#lvm) and
 [tmpfs](https://github.com/jeaye/nixos-in-place#tmpfs).
 ```bash
 $ dnf install squashfs-tools
