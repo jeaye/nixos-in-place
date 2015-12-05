@@ -2,6 +2,9 @@
 An all-in-one script for installing NixOS on top of any existing Linux
 distribution.
 
+nixos-in-place is known to work on Ubuntu, Debian, CentOS, Fedora, and Arch,
+including x86 and x86_64 variants with and without LVM.
+
 ## How to do it
 0. **BACKUP**
 1. See the
