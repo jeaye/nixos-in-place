@@ -38,7 +38,7 @@ $ apt-get install -y squashfs-tools
 
 ### Arch
 ```bash
-$ pacman -Sy squashfs-tools
+$ pacman -Sy wget squashfs-tools
 ```
 
 ### CentOS 7
