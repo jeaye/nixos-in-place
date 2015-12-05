@@ -27,37 +27,31 @@ into `/old-root`, you can; you just need to add the GRUB entry manually.
 
 ## Platform-specifics
 ### Ubuntu 15.10
-If you're using LVM, you'll need to specify `-g` with the proper device for GRUB
-(likely `/dev/sda`).
+See [LVM](#LVM).
 ```bash
 $ apt-get install -y squashfs-tools
 ```
 
 ### Debian 8.2
-If you're using LVM, you'll need to specify `-g` with the proper device for GRUB
-(likely `/dev/sda`).
+See [LVM](#LVM).
 ```bash
 $ apt-get install -y squashfs-tools
 ```
 
 ### Arch
-Arch puts `/tmp` onto its own tmpfs, so you may get a warning saying there may
-not be enough space. Double check on your own, with `df -h` and feel free to
-continue.
+See [tmpfs](#tmpfs).
 ```bash
 $ pacman -Sy wget squashfs-tools
 ```
 
 ### CentOS 7
-CentOS uses LVM, so you'll need to specify `-g` with the proper device for GRUB
-(likely `/dev/sda`).
+See [LVM](#LVM).
 ```bash
 $ yum install wget squashfs-tools
 ```
 
 ### Fedora 23
-Fedora uses LVM, so you'll need to specify `-g` with the proper device for GRUB
-(likely `/dev/sda`).
+See [LVM](#LVM) and [tmpfs](#tmpfs).
 ```bash
 $ dnf install squashfs-tools
 ```
@@ -68,6 +62,16 @@ You'll need to go through AUR; use
 ```bash
 $ sbopkg squashfs-tools
 ```
+
+### LVM
+Systems may use LVM. In which case, you'll need to specify `-g` with the proper
+device for GRUB (likely `/dev/sda`). If your guessed GRUB device looks like
+`/dev/mapper/xxx` and not `/dev/xxx` then you're likely using LVM.
+
+### tmpfs
+Systems may put `/tmp` onto its own tmpfs, so you may get a warning saying there
+may not be enough space. Double check on your own, with `df -h` and feel free to
+continue.
 
 ## How it works
 In short:
