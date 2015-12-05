@@ -26,9 +26,14 @@ NixOS installs Grub2 on top of your existing boot loader. If you'd like to boot
 into `/old-root`, you can; you just need to add the Grub entry manually.
 
 ## Dependencies
-### Debian-based (including Ubuntu)
+### Ubuntu
 ```bash
 $ apt-get install -y squashfs-tools
+```
+
+### Debian 8.2
+```bash
+$ apt-get install -y curl squashfs-tools
 ```
 
 ### Arch
