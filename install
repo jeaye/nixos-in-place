@@ -32,7 +32,9 @@ set +e
 set -e
 [ ! "$arch" = "x86_64" ] && arch=i686
 iso=latest-iso-minimal-$arch-linux
-required_space=3
+minimal_space=3
+graphical_space=5
+required_space=$minimal_space
 
 while getopts ":g:r:t:Gw:h" opt; do
   case $opt in
@@ -47,7 +49,7 @@ while getopts ":g:r:t:Gw:h" opt; do
       ;;
     G)
       iso=latest-iso-graphical-$arch-linux
-      required_space=9
+      required_space=$graphical_space
       ;;
     w)
       working_directory=$OPTARG
@@ -75,7 +77,7 @@ space=$(df -B 1G $working_directory | tail -n1 | sed 's/ \+/ /g' | cut -d' ' -f4
 if [ $space -lt $required_space ];
 then
   log "WARNING: It *looks* like you don't have enough space for the install"
-  log "You need ~3GB for the minimal ISO and ~9GB for the graphical ISO"
+  log "You need ~${minimal_space}GB for the minimal ISO and ~${graphical_space}GB for the graphical ISO"
   log_start "Continue anyway? [yn] "
   read -n 1 -r
   log_end
