@@ -4,13 +4,13 @@ distribution.
 
 ## How to do it
 0. **BACKUP**
-1. Install the
-   [dependencies](https://github.com/jeaye/nixos-in-place#dependencies)
+1. See the
+   [Platform-specifics](https://github.com/jeaye/nixos-in-place#platform-specifics)
 2. Run the following (see `./install -h` for options)
 ```bash
 $ ./install
 ```
-3. Hit `y` to verify the installation
+3. **STOP AND VERIFY** Hit `y` to verify the installation
 4. Grab some coffee while NixOS installs
 5. Type in your new root password
 6. Hit `y` to reboot into NixOS!
@@ -25,7 +25,7 @@ else in `/old-root` is fair game to delete.
 NixOS installs Grub2 on top of your existing boot loader. If you'd like to boot
 into `/old-root`, you can; you just need to add the Grub entry manually.
 
-## Dependencies
+## Platform-specifics
 ### Ubuntu
 ```bash
 $ apt-get install -y squashfs-tools
@@ -37,6 +37,9 @@ $ apt-get install -y squashfs-tools
 ```
 
 ### Arch
+Arch puts `/tmp` onto its own tmpfs, so you may get a warning saying there may
+not be enough space. Double check on your own, with `df -h` and feel free to
+continue.
 ```bash
 $ pacman -Sy wget squashfs-tools
 ```
