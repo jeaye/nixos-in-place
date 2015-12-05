@@ -109,7 +109,7 @@ pushd $working_directory
   # Avoid downloads during dev
   [ -e $here/nixos-in-place-test ] && ln -s /nix-in-place/$iso .
 
-  wget -qc --progress=bar:force http://nixos.org/releases/nixos/$iso
+  wget -c http://nixos.org/releases/nixos/$iso
 
   log "Extracting ISO"
   modprobe loop
