@@ -74,8 +74,8 @@ device for GRUB (likely `/dev/sda`). If your guessed GRUB device looks like
 
 ### tmpfs
 Systems may put `/tmp` onto its own tmpfs, so you may get a warning saying there
-may not be enough space. Double check on your own, with `df -h` and feel free to
-continue.
+may not be enough space. Double check on your own, with `df -h`, and feel free
+to continue.
 
 ## How it works
 In short:
