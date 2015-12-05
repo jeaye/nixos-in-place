@@ -27,13 +27,11 @@ into `/old-root`, you can; you just need to add the GRUB entry manually.
 
 ## Platform-specifics
 ### Ubuntu
-LVM support is a WIP.
 ```bash
 $ apt-get install -y squashfs-tools
 ```
 
 ### Debian 8.2
-LVM support is a WIP.
 ```bash
 $ apt-get install -y squashfs-tools
 ```
@@ -47,9 +45,9 @@ $ pacman -Sy wget squashfs-tools
 ```
 
 ### CentOS 7
-CentOS uses LVM, which is not currently supported. I've been able to get NixOS
-installed, but the kernel then fails to setup the appropriate file systems. This
-is a WIP.
+CentOS uses LVM, so you'll likely need to specify `-g` to make sure GRUB is
+installed to the right device (probably `/dev/sda`). The rest should work
+normally.
 ```bash
 $ yum install wget squashfs-tools
 ```
