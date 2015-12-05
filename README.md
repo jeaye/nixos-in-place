@@ -26,7 +26,7 @@ NixOS installs GRUB2 on top of your existing boot loader. If you'd like to boot
 into `/old-root`, you can; you just need to add the GRUB entry manually.
 
 ## Platform-specifics
-### Ubuntu
+### Ubuntu 15.10
 If you're using LVM, you'll need to specify `-g` with the proper device for GRUB
 (likely `/dev/sda`).
 ```bash
@@ -54,6 +54,13 @@ installed to the right device (probably `/dev/sda`). The rest should work
 normally.
 ```bash
 $ yum install wget squashfs-tools
+```
+
+### Slackware 14.1
+You'll need to go through AUR; use
+[sbopkg](http://blog.jeaye.com/2015/07/09/sbopkg/) or something else.
+```bash
+$ sbopkg squashfs-tools
 ```
 
 ## How it works
