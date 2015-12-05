@@ -45,6 +45,9 @@ $ pacman -Sy wget squashfs-tools
 ```
 
 ### CentOS 7
+CentOS maps drives uses `/dev/mapper` which isn't going to work with NixOS and
+GRUB. As a result, you'll need to manually specify your drives with `-g`, `-r`,
+and `-t` when you invoke `./install`.
 ```bash
 $ yum install wget squashfs-tools
 ```
