@@ -49,11 +49,17 @@ $ pacman -Sy wget squashfs-tools
 ```
 
 ### CentOS 7
-CentOS uses LVM, so you'll likely need to specify `-g` to make sure GRUB is
-installed to the right device (probably `/dev/sda`). The rest should work
-normally.
+CentOS uses LVM, so you'll need to specify `-g` with the proper device for GRUB
+(likely `/dev/sda`).
 ```bash
 $ yum install wget squashfs-tools
+```
+
+### Fedora 23
+Fedora uses LVM, so you'll need to specify `-g` with the proper device for GRUB
+(likely `/dev/sda`).
+```bash
+$ dnf install squashfs-tools
 ```
 
 ### Slackware 14.1
