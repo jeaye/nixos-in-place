@@ -45,9 +45,9 @@ $ pacman -Sy wget squashfs-tools
 ```
 
 ### CentOS 7
-CentOS maps drives uses `/dev/mapper` which isn't going to work with NixOS and
-GRUB. As a result, you'll need to manually specify your drives with `-g`, `-r`,
-and `-t` when you invoke `./install`. See `df -h` for your setup details.
+CentOS uses LVM, which is not currently supported. I've been able to get NixOS
+installed, but the kernel then fails to setup the appropriate file systems. This
+is a WIP.
 ```bash
 $ yum install wget squashfs-tools
 ```
