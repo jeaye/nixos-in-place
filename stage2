@@ -20,6 +20,7 @@ cat <<EOF > /nixos/etc/nixos/configuration-additions.nix
   boot.kernelParams = ["boot.shell_on_fail"];
   boot.loader.grub.device = "$grub_device";
   boot.loader.grub.storePath = "/nixos/nix/store";
+  boot.supportedFilesystems = [ "$root_type" ];
   boot.initrd.postDeviceCommands = ''
     mkdir -p /mnt-root/old-root ;
     mount -t $root_type $root_mount /mnt-root/old-root ;
