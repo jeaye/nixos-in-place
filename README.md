@@ -33,7 +33,7 @@ $ apt-get install -y squashfs-tools
 
 ### Debian 8.2
 ```bash
-$ apt-get install -y curl squashfs-tools
+$ apt-get install -y squashfs-tools
 ```
 
 ### Arch
@@ -43,7 +43,7 @@ $ pacman -Sy squashfs-tools
 
 ### CentOS 7
 ```bash
-$ yum install squashfs-tools
+$ yum install wget squashfs-tools
 ```
 
 ## How it works

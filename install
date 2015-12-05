@@ -12,7 +12,7 @@ log_start "Checking environment... "
 check_existence "mount"
 check_existence "modprobe"
 check_existence "chroot"
-check_existence "curl"
+check_existence "wget"
 check_existence "sed"
 check_existence "grep"
 check_existence "unsquashfs"
@@ -109,7 +109,7 @@ pushd $working_directory
   # Avoid downloads during dev
   [ -e $here/nixos-in-place-test ] && ln -s /nix-in-place/$iso .
 
-  wget -qc --show-progress http://nixos.org/releases/nixos/$iso
+  wget -qc --progress=bar:force http://nixos.org/releases/nixos/$iso
 
   log "Extracting ISO"
   modprobe loop
