@@ -27,11 +27,15 @@ into `/old-root`, you can; you just need to add the GRUB entry manually.
 
 ## Platform-specifics
 ### Ubuntu
+If you're using LVM, you'll need to specify `-g` with the proper device for GRUB
+(likely `/dev/sda`).
 ```bash
 $ apt-get install -y squashfs-tools
 ```
 
 ### Debian 8.2
+If you're using LVM, you'll need to specify `-g` with the proper device for GRUB
+(likely `/dev/sda`).
 ```bash
 $ apt-get install -y squashfs-tools
 ```
