@@ -41,6 +41,11 @@ $ apt-get install -y curl squashfs-tools
 $ pacman -Sy squashfs-tools
 ```
 
+### CentOS 7
+```bash
+$ yum install squashfs-tools
+```
+
 ## How it works
 The provided `install` script will verify your system is sane, allow you to
 configure some options, and then pull down the latest ISO from NixOS. It them
