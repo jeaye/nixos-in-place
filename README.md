@@ -27,11 +27,13 @@ into `/old-root`, you can; you just need to add the Grub entry manually.
 
 ## Platform-specifics
 ### Ubuntu
+LVM support is a WIP.
 ```bash
 $ apt-get install -y squashfs-tools
 ```
 
 ### Debian 8.2
+LVM support is a WIP.
 ```bash
 $ apt-get install -y squashfs-tools
 ```
