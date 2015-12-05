@@ -13,7 +13,7 @@ including x86 and x86_64 variants with and without LVM.
 ```bash
 $ ./install
 ```
-3. **STOP AND VERIFY** Hit `y` to verify the installation
+3. **STOP AND VERIFY**, then hit `y` to confirm
 4. Grab some coffee while NixOS installs
 5. Type in your new root password
 6. Hit `y` to reboot into NixOS!
