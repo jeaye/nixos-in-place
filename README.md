@@ -1,6 +1,6 @@
 # nixos-in-place
 An all-in-one script for installing NixOS on top of any existing Linux
-distribution.
+distribution while in that distribution.
 
 nixos-in-place is known to work on Ubuntu, Debian, CentOS, Fedora, Arch, and
 Slackware, including x86 and x86_64 variants with and without LVM.
