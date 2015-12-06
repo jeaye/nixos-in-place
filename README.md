@@ -27,8 +27,8 @@ old system and all your old files still exist and are setup to mount on
 else in `/old-root` is fair game to delete.
 
 NixOS installs GRUB2 on top of your existing boot loader. If you'd like to boot
-into `/old-root`, you can; you just need to add the GRUB entry manually in your
-Nix files.
+into `/old-root`, you can; you just need to add the GRUB entry, from
+`/old-root/boot/grub`, manually in your Nix files.
 
 ## Platform-specifics
 ### Ubuntu 15.10
