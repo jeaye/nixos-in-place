@@ -9,6 +9,7 @@ including x86 and x86_64 variants with and without LVM.
 0. **BACKUP**
 1. See the
    [Platform-specifics](https://github.com/jeaye/nixos-in-place#platform-specifics)
+   for your distribution
 2. Run the following (see `./install -h` for options)
 ```bash
 $ ./install
