@@ -2,8 +2,8 @@
 An all-in-one script for installing NixOS on top of any existing Linux
 distribution.
 
-nixos-in-place is known to work on Ubuntu, Debian, CentOS, Fedora, and Arch,
-including x86 and x86_64 variants with and without LVM.
+nixos-in-place is known to work on Ubuntu, Debian, CentOS, Fedora, Arch, and
+Slackware, including x86 and x86_64 variants with and without LVM.
 
 ## How to do it
 0. **BACKUP**
@@ -62,8 +62,11 @@ See [LVM](https://github.com/jeaye/nixos-in-place#lvm) and
 $ dnf install squashfs-tools
 ```
 
-### Slackware 14.1
-You'll need to go through AUR; use
+### Slackware 14.1 (and -current)
+Both Slackware 14.1 and -currrent have a bug where `/proc/self/mountinfo`
+references a non-existent `/dev/root`. You'll need to manually create a link to
+your file system root for GRUB to install properly. Example: `ln -s /dev/sda1
+/dev/root`.  For the dependencies, you'll need to go through AUR; use
 [sbopkg](http://blog.jeaye.com/2015/07/09/sbopkg/) or something else.
 ```bash
 $ sbopkg squashfs-tools
