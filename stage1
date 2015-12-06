@@ -46,5 +46,7 @@ mount --bind $here nixos-in-place
 log "Embarking stage2!"
 chroot . /$INIT
 
+## Various platforms use different flags; just try what we can to clean up
 log "Cleaning up mounts"
-umount -f nixos
+umount -fR nixos 2>&1 > /dev/null || true
+umount -f nixos 2>&1 > /dev/null || true
