@@ -6,14 +6,21 @@ root_mount=$1
 root_type=$2
 grub_device=$3
 digitalocean=$4
-digitalocean_eth_configs=""
+digitalocean_configs=""
 
 if [ "$digitalocean" == "true" ];
 then
   log "Configuring Digital Ocean networking"
-  digitalocean_eth_configs="
+  digitalocean_configs="
     networking.interfaces.eth0.useDHCP = false;
     networking.interfaces.eth1.useDHCP = false;
+
+    systemd.services.setup-network = {
+      wantedBy = [ \"network.target\" ];
+      serviceConfig = {
+        ExecStart = \"/etc/nixos-in-place/setup-network\";
+      };
+    };
   "
   mkdir -p /nixos/etc/nixos-in-place
   cp /nixos-in-place/setup-network /nixos/etc/nixos-in-place/
@@ -49,7 +56,7 @@ cat <<EOF > /nixos/etc/nixos/configuration-additions.nix
       fsType = "$root_type";
     };
   };
-  $digitalocean_eth_configs
+  $digitalocean_configs
 }
 EOF
 
