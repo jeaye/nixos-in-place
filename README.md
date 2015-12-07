@@ -31,6 +31,7 @@ into `/old-root`, you can; you just need to add the GRUB entry, from
 `/old-root/boot/grub`, manually in your Nix files.
 
 ## Platform-specifics
+
 ### Ubuntu 15.10
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
@@ -70,6 +71,18 @@ your file system root for GRUB to install properly. Example: `ln -s /dev/sda1
 [sbopkg](http://blog.jeaye.com/2015/07/09/sbopkg/) or something else.
 ```bash
 $ sbopkg squashfs-tools
+```
+
+### All platforms
+It's recommended that you have 1GB of available RAM. If you're on a machine with
+less RAM, such as a VPS with 512MB, you can quickly make a swap file for the
+install.
+
+```bash
+$ dd if=/dev/zero of=swap bs=1M count=512
+$ mkswap ./swap
+$ chmod 600 ./swap
+$ swapon ./swap
 ```
 
 ### LVM
