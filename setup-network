@@ -6,16 +6,16 @@ set -u
 echo "Inspecting eth0 and eth1..."
 interfaces=/etc/network/interfaces
 gateway=$(grep gateway $interfaces | awk '{print $2}')
-ns1=$(grep "dns-nameservers" /etc/network/interfaces | awk '{print $2}')
-ns2=$(grep "dns-nameservers" /etc/network/interfaces | awk '{print $3}')
+ns1=$(grep "dns-nameservers" $interfaces | awk '{print $2}')
+ns2=$(grep "dns-nameservers" $interfaces | awk '{print $3}')
 
 eth0_enabled=$(grep eth0 $interfaces)
 eth0_address=$(grep address $interfaces | awk '{print $2}' | head -1)
-eth0_prefix_length=$(grep -Eo "/..?" interfaces | sed 's_/__' | head -1)
+eth0_prefix_length=$(grep -Eo "/..?" $interfaces | sed 's_/__' | head -1)
 
 eth1_enabled=$(grep eth1 $interfaces)
 eth1_address=$(grep address $interfaces | awk '{print $2}' | tail -1)
-eth1_prefix_length=$(grep -Eo "/..?" interfaces | sed 's_/__' | tail -1)
+eth1_prefix_length=$(grep -Eo "/..?" $interfaces | sed 's_/__' | tail -1)
 
 ## Takes 1) interface name; 2) address; 3) prefix length
 function enable_interface
