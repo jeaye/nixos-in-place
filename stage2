@@ -10,11 +10,13 @@ digitalocean_eth_configs=""
 
 if [ "$digitalocean" == "true" ];
 then
-  # TODO: log here
+  log "Configuring Digital Ocean networking"
   digitalocean_eth_configs="
     networking.interfaces.eth0.useDHCP = false;
     networking.interfaces.eth1.useDHCP = false;
   "
+  mkdir -p /nixos/etc/nixos-in-place
+  cp /nixos-in-place/setup-network /nixos/etc/nixos-in-place/
 fi
 
 ## Enable host resolution
