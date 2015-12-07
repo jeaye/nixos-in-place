@@ -1,0 +1,52 @@
+#!/bin/bash
+
+set -eu
+
+## Inspect what we can
+echo "Inspecting eth0 and eth1..."
+interfaces=/etc/network/interfaces
+gateway=$(grep gateway $interfaces | awk '{print $2}')
+ns1=$(pcregrep -o1 "dns-nameservers (.*) (.*)" $interfaces)
+ns2=$(pcregrep -o2 "dns-nameservers (.*) (.*)" $interfaces)
+
+eth0_enabled=$(grep eth0 $interfaces)
+eth0_address=$(grep address $interfaces | awk '{print $2}' | head -1)
+eth0_prefix_length=$(pcregrep -o1 "/(.*) dev" $interfaces)
+
+eth1_enabled=$(grep eth1 $interfaces)
+eth1_address=$(grep address $interfaces | awk '{print $2}' | tail -1)
+eth1_prefix_length=$(pcregrep -o2 "/(.*) dev" $interfaces)
+
+## Takes 1) interface name; 2) address; 3) prefix length
+function enable_interface
+{
+  echo "Enabling $1..."
+  ip link set "$1" up
+  ip addr add "$2/$3" dev "$1"
+}
+
+## Takes 1) nameserver 1; 2) nameserver 2; 3) gateway
+function enable_dns
+{
+  echo "Enabling DNS..."
+  resolvconf -m 1 -a static <<EOF
+  nameserver $1
+  nameserver $2
+EOF
+  ip route add default via "$3" || true
+}
+
+[ -n "$eth0_enabled" ] && enable_interface eth0 $eth0_address $eth0_prefix_length
+[ -n "$eth1_enabled" ] && enable_interface eth1 $eth1_address $eth1_prefix_length
+
+enable_dns $ns1 $ns2 $gateway
+
+echo "All set!"
+
+## Example data:
+#iface eth0 inet static
+#        address 188.166.222.72
+#        netmask 255.255.240.0
+#        gateway 188.166.208.1
+#        up ip addr add 10.15.0.7/16 dev eth0
+#        dns-nameservers 8.8.8.8 8.8.4.4
