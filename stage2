@@ -5,6 +5,17 @@ set -eu
 root_mount=$1
 root_type=$2
 grub_device=$3
+digitalocean=$4
+digitalocean_eth_configs=""
+
+if [ "$digitalocean" == "true" ];
+then
+  # TODO: log here
+  digitalocean_eth_configs="
+    networking.interfaces.eth0.useDHCP = false;
+    networking.interfaces.eth1.useDHCP = false;
+  "
+fi
 
 ## Enable host resolution
 cp /etc/{external-,}resolv.conf
@@ -36,6 +47,7 @@ cat <<EOF > /nixos/etc/nixos/configuration-additions.nix
       fsType = "$root_type";
     };
   };
+  $digitalocean_eth_configs
 }
 EOF
 
