@@ -74,15 +74,22 @@ $ sbopkg squashfs-tools
 ```
 
 ### All platforms
-It's recommended that you have 1GB of available RAM. If you're on a machine with
-less RAM, such as a VPS with 512MB, you can quickly make a swap file for the
-install.
+It's recommended that you have 1GB of available RAM for unsquashing the NixOS
+live media. If you're on a machine with less RAM, such as a VPS with 512MB, you
+can quickly make a swap file for the install.
 
 ```bash
 $ dd if=/dev/zero of=swap bs=1M count=512
 $ mkswap ./swap
 $ chmod 600 ./swap
 $ swapon ./swap
+```
+
+To remove it, after the install.
+
+```bash
+$ swapoff ./swap
+$ rm -f ./swap
 ```
 
 ### LVM
