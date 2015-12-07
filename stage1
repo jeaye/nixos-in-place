@@ -6,6 +6,7 @@ here=$1
 root_mount=$2
 root_type=$3
 grub_device=$4
+digitalocean=$5
 
 ## Bring in some helper functions
 . $here/util
@@ -46,7 +47,12 @@ mount --bind $here nixos-in-place
 log "Embarking stage2!"
 chroot . /$INIT
 
+if [ "$digitalocean" == "true" ];
+then
+  log "Initializing Digital Ocean network service"
+fi
+
 ## Various platforms use different flags; just try what we can to clean up
 log "Cleaning up mounts"
-umount -fR nixos 2>&1 > /dev/null || true
-umount -f nixos 2>&1 > /dev/null || true
+umount -fR nixos >/dev/null 2>&1 || true
+umount -f nixos >/dev/null 2>&1 || true

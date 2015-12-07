@@ -35,8 +35,9 @@ iso=latest-iso-minimal-$arch-linux
 minimal_space=3
 graphical_space=5
 required_space=$minimal_space
+digitalocean=false
 
-while getopts ":g:r:t:Gw:h" opt; do
+while getopts ":g:r:t:Gdw:h" opt; do
   case $opt in
     g)
       grub_device=$OPTARG
@@ -50,6 +51,9 @@ while getopts ":g:r:t:Gw:h" opt; do
     G)
       iso=latest-iso-graphical-$arch-linux
       required_space=$graphical_space
+      ;;
+    G)
+      digitalocean=true
       ;;
     w)
       working_directory=$OPTARG
@@ -94,6 +98,7 @@ log "   GRUB => $grub_device"
 log "   Root => $root_mount ($root_type)"
 log "   ISO => $iso"
 log "   Working directory => $working_directory"
+log "   Digital Ocean => $digitalocean"
 log_start "Continue? [yn] "
 read -n 1 -r
 log_end
@@ -124,7 +129,7 @@ pushd $working_directory
 
   ## Setup the chroot environment before install
   log "Embarking stage1!"
-  $here/stage1 $here $root_mount $root_type $grub_device
+  $here/stage1 $here $root_mount $root_type $grub_device $digitalocean
 
   ## Minimize residual space usage
   rm -rf ./host
