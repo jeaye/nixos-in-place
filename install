@@ -97,8 +97,8 @@ log "NixOS installer (nixos-in-place)"
 log "   GRUB => $grub_device"
 log "   Root => $root_mount ($root_type)"
 log "   ISO => $iso"
-log "   Working directory => $working_directory"
 log "   Digital Ocean => $digitalocean"
+log "   Working directory => $working_directory"
 log_start "Continue? [yn] "
 read -n 1 -r
 log_end
