@@ -52,7 +52,7 @@ while getopts ":g:r:t:Gdw:h" opt; do
       iso=latest-iso-graphical-$arch-linux
       required_space=$graphical_space
       ;;
-    G)
+    d)
       digitalocean=true
       ;;
     w)
