@@ -16,6 +16,7 @@ then
 
     systemd.services.setup-network = {
       wantedBy = [ \"multi-user.target\" ];
+      after = [ \"network.target\" ];
       serviceConfig = {
         ExecStart = \"\${pkgs.bash}/bin/bash -i /etc/nixos-in-place/setup-network\";
       };
