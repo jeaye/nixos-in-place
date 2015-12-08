@@ -49,7 +49,6 @@ chroot . /$INIT
 
 ## Various platforms use different flags; just try what we can to clean up
 log "Cleaning up mounts"
-## TODO: Refactor this into a function
 umount -fR nixos >/dev/null 2>&1 || true
 umount -f nixos >/dev/null 2>&1 || true
 umount -f nixos-in-place >/dev/null 2>&1 || true
