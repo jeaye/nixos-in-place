@@ -52,4 +52,5 @@ log "Cleaning up mounts"
 umount -fR nixos >/dev/null 2>&1 || true
 umount -f nixos >/dev/null 2>&1 || true
 umount -f nixos-in-place >/dev/null 2>&1 || true
+umount -f nix/store >/dev/null 2>&1 || true
 rmdir nixos-in-place
