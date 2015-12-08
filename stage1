@@ -48,11 +48,10 @@ log "Embarking stage2!"
 chroot . /$INIT
 
 ## Various platforms use different flags; just try what we can to clean up
-function unmount_silently
-{ umount -f $1 >/dev/null 2>&1 || true; }
-
 log "Cleaning up mounts"
-unmount_silently nix/store
-unmount_silently nixos
-unmount_silently nixos-in-place
+## TODO: Refactor this into a function
+umount -fR nixos >/dev/null 2>&1 || true
+umount -f nixos >/dev/null 2>&1 || true
+umount -f nixos-in-place >/dev/null 2>&1 || true
+umount -f nix/store >/dev/null 2>&1 || true
 rmdir nixos-in-place
