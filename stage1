@@ -52,7 +52,7 @@ function unmount_silently
 { umount -f $1 >/dev/null 2>&1 || true; }
 
 log "Cleaning up mounts"
+unmount_silently nix/store
 unmount_silently nixos
 unmount_silently nixos-in-place
-unmount_silently nix/store
 rmdir nixos-in-place
