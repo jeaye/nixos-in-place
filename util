@@ -19,13 +19,13 @@ show_help()
 {
   log "usage: $0 [OPTION...]"
   log
-  log "  -h  Show this help message"
-  log "  -g  Set GRUB target device (default: $grub_device)"
-  log "  -r  Set root filesystem target device (default: $root_mount)"
-  log "  -t  Set root filesystem type (default: $root_type)"
-  log "  -G  Use the graphical NixOS ISO (default: $iso)"
-  log "  -d  Prepare for use with Digital Ocean (default: $digitalocean)"
-  log "  -w  Specify the working directory (default: random in /tmp)"
+  log "  -h         Show this help message"
+  log "  -g <dev>   Set GRUB target device (default: $grub_device)"
+  log "  -r <dev>   Set root filesystem target device (default: $root_mount)"
+  log "  -t <type>  Set root filesystem type (default: $root_type)"
+  log "  -G         Use the graphical NixOS ISO (default: $iso)"
+  log "  -d         Prepare for use with Digital Ocean (default: $digitalocean)"
+  log "  -w <dir>   Specify the working directory (default: random in /tmp)"
   exit 1
 }
 
