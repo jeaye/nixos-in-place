@@ -15,7 +15,7 @@ then
     networking.interfaces.eth1.useDHCP = false;
 
     systemd.services.setup-network = {
-      wantedBy = [ \"network.target\" ];
+      wantedBy = [ \"multi-user.target\" ];
       serviceConfig = {
         ExecStart = \"\${pkgs.bash}/bin/bash -i /etc/nixos-in-place/setup-network\";
       };
