@@ -29,7 +29,7 @@ then
   ## Not a valid link now, but this will represent the file which DO will
   ## update each boot.
   mkdir -p /nixos/etc/network
-  ln -s /old-root/etc/network/interfaces /nixos/etc/network/
+  ln -sf /old-root/etc/network/interfaces /nixos/etc/network/
 fi
 
 ## Enable host resolution
