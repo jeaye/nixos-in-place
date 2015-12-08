@@ -4,8 +4,8 @@ system without using live media. When you reboot, you're in NixOS.
 
 nixos-in-place is known to work on Ubuntu, Debian, CentOS, Fedora, Arch, and
 Slackware, including x86 and x86_64 variants, with and without LVM, including
-those on [Digital Ocean](https://github.com/jeaye/nixos-in-place#digital-ocean)
-droplets!
+systems on [Digital
+Ocean](https://github.com/jeaye/nixos-in-place#digital-ocean) droplets!
 
 ## How to do it
 0. **BACKUP**
