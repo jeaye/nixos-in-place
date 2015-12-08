@@ -3,7 +3,9 @@ An all-in-one script for installing NixOS on top of any existing Linux
 system without using live media. When you reboot, you're in NixOS.
 
 nixos-in-place is known to work on Ubuntu, Debian, CentOS, Fedora, Arch, and
-Slackware, including x86 and x86_64 variants with and without LVM.
+Slackware, including x86 and x86_64 variants, with and without LVM, including
+those on [Digital Ocean](https://github.com/jeaye/nixos-in-place#digital-ocean)
+droplets!
 
 ## How to do it
 0. **BACKUP**
@@ -31,6 +33,10 @@ into `/old-root`, you can; you just need to add the GRUB entry, from
 `/old-root/boot/grub`, manually in your Nix files.
 
 ## Platform-specifics
+### Digital Ocean
+For use on DO droplets, follow the normal steps for your platform and also
+specify the `-d` flag (see `-h` for more info). Once installed, if you clean up
+`/old-root`, you must keep `/old-root/etc/network` around; DO needs it!
 
 ### Ubuntu 15.10
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
