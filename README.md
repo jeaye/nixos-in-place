@@ -34,9 +34,10 @@ into `/old-root`, you can; you just need to add the GRUB entry, from
 
 ## Platform-specifics
 ### Digital Ocean
-For use on DO droplets, follow the normal steps for your platform and also
-specify the `-d` flag (see `-h` for more info). Once installed, if you clean up
-`/old-root`, you must keep `/old-root/etc/network` around; DO needs it!
+For use on DO droplets, follow the normal steps for your platform (**Debian has
+shown the best results**) and also specify the `-d` flag (see `-h` for more
+info). Once installed, if you clean up `/old-root`, you must keep
+`/old-root/etc/network` around; DO needs it!
 
 The default configuration for NixOS disables SSH, so you'll need to use the DO
 console, once you've finished the installation, in order to setup which services
