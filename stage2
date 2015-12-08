@@ -11,6 +11,7 @@ digitalocean_configs=""
 if [ "$digitalocean" == "true" ];
 then
   digitalocean_configs="
+    ## Digital Ocean networking setup; manage interfaces manually
     networking.interfaces.eth0.useDHCP = false;
     networking.interfaces.eth1.useDHCP = false;
 
@@ -42,6 +43,7 @@ nix-env -i pcre
 nixos-generate-config --root /nixos
 
 cat <<EOF > /nixos/etc/nixos/configuration-additions.nix
+  ## Everything below is generated from nixos-in-place; modify with caution!
   boot.kernelParams = ["boot.shell_on_fail"];
   boot.loader.grub.device = "$grub_device";
   boot.loader.grub.storePath = "/nixos/nix/store";
