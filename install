@@ -112,9 +112,6 @@ pushd $working_directory
   log "Downloading NixOS $iso"
   mkdir -p mnt host/nix
 
-  # Avoid downloads during dev
-  [ -e $here/nixos-in-place-test ] && ln -s /nix-in-place/$iso .
-
   wget -c http://nixos.org/releases/nixos/$iso
 
   log "Extracting ISO"
