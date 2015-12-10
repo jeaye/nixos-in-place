@@ -42,8 +42,7 @@ nix-env -i pcre
 ## Generate a base config
 nixos-generate-config --root /nixos
 
-## TODO: nixos-in-place.nix; import it
-cat <<EOF > /nixos/etc/nixos/configuration-additions.nix
+cat <<EOF > /nixos/etc/nixos/nixos-in-place.nix
   ## Everything below is generated from nixos-in-place; modify with caution!
   boot.kernelParams = ["boot.shell_on_fail"];
   boot.loader.grub.device = "$grub_device";
@@ -70,9 +69,8 @@ EOF
 
 ## Add in our configuration additions
 nixos_dir=/nixos/etc/nixos
-mv $nixos_dir/{,backup-}configuration.nix
-head --lines=-1 $nixos_dir/backup-configuration.nix > $nixos_dir/configuration.nix
-cat $nixos_dir/configuration-additions.nix >> $nixos_dir/configuration.nix
+cp $nixos_dir/{,backup-}configuration.nix
+sed -i 's|imports = \[|imports = \[\n./nixos-in-place.nix|' $nixos_dir/configuration.nix
 
 ## Remove the automatically-generated fileSystems configuration
 mv $nixos_dir/{,backup-}hardware-configuration.nix
