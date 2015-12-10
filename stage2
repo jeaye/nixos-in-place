@@ -70,7 +70,7 @@ EOF
 ## Add in our configuration additions
 nixos_dir=/nixos/etc/nixos
 cp $nixos_dir/{,backup-}configuration.nix
-sed -i 's|\(\s*\)\(./hardware-configuration.nix\)|\1\2\n\1./nixos-in-place.nix|' configuration.nix
+sed -i 's|\(\s*\)\(./hardware-configuration.nix\)|\1\2\n\1./nixos-in-place.nix|' $nixos_dir/configuration.nix
 
 ## Remove the automatically-generated fileSystems configuration
 mv $nixos_dir/{,backup-}hardware-configuration.nix
