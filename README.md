@@ -7,6 +7,9 @@ Slackware, including x86 and x86_64 variants, with and without LVM, including
 systems on [Digital
 Ocean](https://github.com/jeaye/nixos-in-place#digital-ocean) droplets!
 
+If you want to spin up a machine just to convert it and you aren't sure which
+distribution to choose, prefer Debian; it plays very nicely with nixos-in-place.
+
 ## How to do it
 0. **BACKUP**
 1. See the
