@@ -43,6 +43,9 @@ The default configuration for NixOS disables SSH, so you'll need to use the DO
 console, once you've finished the installation, in order to setup which services
 you'd actually like.
 
+I recommend installing from a tmux session, to avoid SSH timeouts and losing
+access to your install part-way through. Seriously, use tmux or screen.
+
 ### Ubuntu 15.10
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
