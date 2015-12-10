@@ -43,6 +43,8 @@ nix-env -i pcre
 nixos-generate-config --root /nixos
 
 cat <<EOF > /nixos/etc/nixos/nixos-in-place.nix
+{ config, pkgs, ... }:
+{
   ## Everything below is generated from nixos-in-place; modify with caution!
   boot.kernelParams = ["boot.shell_on_fail"];
   boot.loader.grub.device = "$grub_device";
