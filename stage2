@@ -42,6 +42,7 @@ nix-env -i pcre
 ## Generate a base config
 nixos-generate-config --root /nixos
 
+## TODO: nixos-in-place.nix; import it
 cat <<EOF > /nixos/etc/nixos/configuration-additions.nix
   ## Everything below is generated from nixos-in-place; modify with caution!
   boot.kernelParams = ["boot.shell_on_fail"];
