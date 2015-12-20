@@ -5,7 +5,7 @@ set -eu
 check_existence()
 {
   set +e
-  which $1 > /dev/null 2>&1
+  which "$1" > /dev/null 2>&1
   exists=$?
   if [ ! "$exists" -eq "0" ];
   then
@@ -30,8 +30,8 @@ show_help()
 }
 
 log()
-{ printf ">>> $@\n"; }
+{ printf ">>> %s\n" "$*"; }
 log_start()
-{ printf ">>> $@"; }
+{ printf ">>> %s" "$*"; }
 log_end()
-{ printf "$@\n"; }
+{ printf "%s\n" "$*"; }

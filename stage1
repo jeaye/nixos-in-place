@@ -9,14 +9,14 @@ grub_device=$4
 digitalocean=$5
 
 ## Bring in some helper functions
-. $here/util
+. "$here/util"
 
 ## Enable networking
 log "Setting up chroot networking"
 cd host
 mkdir -p etc dev proc sys
 cp /etc/resolv.conf etc/external-resolv.conf
-for fn in dev proc sys; do mount --bind /$fn $fn; done
+for fn in dev proc sys; do mount --bind "/$fn" "$fn"; done
 
 ## Patch the ISO for local chroot
 log_start "Looking for NixOS init... "
@@ -28,11 +28,11 @@ log_end "$BASH"
 
 ## Don't run systemd on chroot start, run our stage2 script
 log "Patching init"
-sed -i "s,exec systemd,exec /$BASH -i /nixos-in-place/stage2 $root_mount $root_type $grub_device $digitalocean," $INIT
-sed -i "s,starting systemd,starting /nixos-in-place/stage2," $INIT
+sed -i "s,exec systemd,exec /$BASH -i /nixos-in-place/stage2 $root_mount $root_type $grub_device $digitalocean," "$INIT"
+sed -i "s,starting systemd,starting /nixos-in-place/stage2," "$INIT"
 
 ## Don't try to remount / since we didn't do a proper phase 1
-sed -i "s|mount -n -o remount,rw none /|echo 'not remounting /'|" $INIT
+sed -i "s|mount -n -o remount,rw none /|echo 'not remounting /'|" "$INIT"
 
 ## The chroot will install outside of itself, into the main system
 log "Binding remaining environment"
@@ -41,11 +41,11 @@ mount --bind /nixos nixos
 
 ## Allow stage2 to access these scripts
 mkdir -p nixos-in-place
-mount --bind $here nixos-in-place
+mount --bind "$here" nixos-in-place
 
 ## Imbue the modified live CD environment so we can install
 log "Embarking stage2!"
-chroot . /$INIT
+chroot . "/$INIT"
 
 ## Various platforms use different flags; just try what we can to clean up
 log "Cleaning up mounts"
