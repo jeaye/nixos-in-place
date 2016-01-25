@@ -8,7 +8,7 @@ grub_device=$3
 digitalocean=$4
 digitalocean_configs=""
 
-if [ "$digitalocean" == "true" ];
+if [ "$digitalocean" = "true" ];
 then
   digitalocean_configs="
     ## Digital Ocean networking setup; manage interfaces manually
@@ -33,7 +33,7 @@ then
 fi
 
 ## Enable host resolution
-cp /etc/{external-,}resolv.conf
+cp /etc/external-resolv.conf /etc/resolv.conf
 
 ## Install dependencies; it's easier to do this here, in the Nix chroot,
 ## since we don't rely on the host system.
@@ -71,11 +71,11 @@ EOF
 
 ## Add in our configuration additions
 nixos_dir=/nixos/etc/nixos
-cp $nixos_dir/{,backup-}configuration.nix
+cp $nixos_dir/configuration.nix $nixos_dir/backup-configuration.nix
 sed -i 's|\(\s*\)\(./hardware-configuration.nix\)|\1\2\n\1./nixos-in-place.nix|' $nixos_dir/configuration.nix
 
 ## Remove the automatically-generated fileSystems configuration
-mv $nixos_dir/{,backup-}hardware-configuration.nix
+mv $nixos_dir/hardware-configuration.nix $nixos_dir/backup-hardware-configuration.nix
 pcregrep -Mv "fileSystems.\"/\"[\s\S]*};" $nixos_dir/backup-hardware-configuration.nix > $nixos_dir/hardware-configuration.nix
 
 ## Installs grub and a base NixOS system; after a reboot, we're golden

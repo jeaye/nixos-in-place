@@ -5,7 +5,7 @@ set -eu
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 ## Bring in some helper functions
-source $here/util
+source "$here/util"
 
 ## Sanity-check
 log_start "Checking environment... "
@@ -59,7 +59,7 @@ while getopts ":g:r:t:Gdw:h" opt; do
       working_directory=$OPTARG
       ;;
     h)
-      show_help $0
+      show_help "$0"
       ;;
     \?)
       log "ERROR invalid option: -$OPTARG" >&2
@@ -77,8 +77,8 @@ if [ "$(id -u)" != "0" ]; then
   exit 1
 fi
 
-space=$(df -B 1G $working_directory | tail -n1 | sed 's/ \+/ /g' | cut -d' ' -f4)
-if [ $space -lt $required_space ];
+space=$(df -B 1G "$working_directory" | tail -n1 | sed 's/ \+/ /g' | cut -d' ' -f4)
+if [ "$space" -lt "$required_space" ];
 then
   log "WARNING: It *looks* like you don't have enough space for the install"
   log "You need ~${minimal_space}GB for the minimal ISO and ~${graphical_space}GB for the graphical ISO"
@@ -108,7 +108,7 @@ then
   exit 1
 fi
 
-pushd $working_directory
+pushd "$working_directory"
   log "Downloading NixOS $iso"
   mkdir -p mnt host/nix
 
@@ -126,7 +126,7 @@ pushd $working_directory
 
   ## Setup the chroot environment before install
   log "Embarking stage1!"
-  $here/stage1 $here $root_mount $root_type $grub_device $digitalocean
+  "$here/stage1" "$here" "$root_mount" "$root_type" "$grub_device" "$digitalocean"
 
   ## Minimize residual space usage
   rm -rf ./host
