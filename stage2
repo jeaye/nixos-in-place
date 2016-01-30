@@ -73,6 +73,7 @@ EOF
 nixos_dir=/nixos/etc/nixos
 cp $nixos_dir/configuration.nix $nixos_dir/backup-configuration.nix
 sed -i 's|\(\s*\)\(./hardware-configuration.nix\)|\1\2\n\1./nixos-in-place.nix|' $nixos_dir/configuration.nix
+sed -i 's/# services\.openssh/services\.openssh/' $nixos_dir/configuration.nix
 
 ## Remove the automatically-generated fileSystems configuration
 mv $nixos_dir/hardware-configuration.nix $nixos_dir/backup-hardware-configuration.nix
