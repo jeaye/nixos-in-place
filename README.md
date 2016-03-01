@@ -13,9 +13,10 @@ Ocean](https://github.com/jeaye/nixos-in-place#digital-ocean) droplets!
    [Platform-specifics](https://github.com/jeaye/nixos-in-place#platform-specifics)
    for your distribution
 2. Run the following (see `./install -h` for options)
-```bash
-$ ./install
-```
+
+   ```bash
+   $ ./install
+   ```
 3. **STOP AND VERIFY**, then hit `y` to confirm
 4. Grab some coffee while NixOS installs
 5. Type in your new root password
