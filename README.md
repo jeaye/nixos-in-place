@@ -141,11 +141,6 @@ that it's not a typical setup. After that, we install to `/nixos`, which is
 bound to the host's `/nixos`. NixOS then installs GRUB and we're good to reboot
 into our new machine!
 
-## Thanks
-Both [lethalman](https://github.com/lethalman) and
-[cleverca22](https://github.com/cleverca22) were very helpful in getting this
-working.  Muchas gracias.
-
 ## Donate
 Feel free to shoot Bitcoins my way: **1HaMvpDjy7QJBDkcZALJr3s26FxLpv5WtJ**
 
