@@ -30,6 +30,9 @@ then
   ## update each boot.
   mkdir -p /nixos/etc/network
   ln -sf /old-root/etc/network/interfaces /nixos/etc/network/
+  
+  ## Use the original authorized_keys that DO added
+  ln -sf /old-root/root/.ssh/authorized_keys /root/.ssh/authorized_keys
 fi
 
 ## Enable host resolution
