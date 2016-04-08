@@ -61,7 +61,7 @@ cat <<EOF > /nixos/etc/nixos/nixos-in-place.nix
     "/" = {
       device = "/old-root/nixos";
       fsType = "none";
-      "options" = "bind";
+      options = [ "bind" ];
     };
     "/old-root" = {
       device = "$root_mount";
