@@ -36,7 +36,7 @@ into `/old-root`, you can; you just need to add the GRUB entry, from
 ## Platform-specifics
 ### Digital Ocean
 For use on DO droplets, follow the normal steps for your platform (Debian has
-shown the best results) and also specify the `-d` flag (see `-h` for more
+shown the best results) but add the `-d` flag to `./install` (see `-h` for more
 info). Once installed, if you clean up `/old-root`, you must keep
 `/old-root/etc/network` around; DO needs it!
 
