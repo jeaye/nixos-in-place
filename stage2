@@ -32,6 +32,8 @@ then
   ln -sf /old-root/etc/network/interfaces /nixos/etc/network/
   
   ## Use the original authorized_keys that DO added
+  mkdir -pm 711 /root/
+  mkdir -pm 700 /root/.ssh/
   ln -sf /old-root/root/.ssh/authorized_keys /root/.ssh/authorized_keys
 fi
 
