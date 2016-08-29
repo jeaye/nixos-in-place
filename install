@@ -23,7 +23,11 @@ log_end "seems sane"
 ## Setup essential variables; allow overriding with input
 root_mount=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
 root_type=$(mount | grep -Eo "/ type \w+" | sed 's/ /\n/g' | tail -n1)
-grub_device=$(echo $root_mount | sed "s|[0-9]\+||")
+if grep '/dev/nvme' <<< $root_mount; then
+  grub_device=$(echo $root_mount | sed "s|p[0-9]\+$||");
+elif grep '/dev/sd' <<< $root_mount; then
+  grub_device=$(echo $root_mount | sed "s|[0-9]\+||");
+fi
 working_directory=$(mktemp -d)
 
 ## Try to work out which architecture to use
