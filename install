@@ -27,6 +27,10 @@ if grep '/dev/nvme' <<< $root_mount; then
   grub_device=$(echo $root_mount | sed "s|p[0-9]\+$||");
 elif grep '/dev/sd' <<< $root_mount; then
   grub_device=$(echo $root_mount | sed "s|[0-9]\+||");
+elif grep '/dev/vd' <<< $root_mount; then
+  grub_device=$(echo $root_mount | sed "s|[0-9]\+||");
+else
+  echo "Unable to determine your grub boot device! Please specify with the -g option."
 fi
 working_directory=$(mktemp -d)
 
