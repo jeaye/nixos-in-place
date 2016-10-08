@@ -23,7 +23,7 @@ Ocean](https://github.com/jeaye/nixos-in-place#digital-ocean) droplets!
 6. Hit `y` to reboot into NixOS!
 
 ## What you get
-A fresh install of NixOS 15.09, either minimal or graphical (your choice). Your
+A fresh install of NixOS, either minimal or graphical (your choice). Your
 old system and all your old files still exist and are setup to mount on
 `/old-root`. As far as the file system is concerned, NixOS is installed in
 `/old-root/nixos` and `/` is rebound before spinning up the system; everything
