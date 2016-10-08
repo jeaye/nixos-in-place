@@ -39,7 +39,7 @@ set +e
   arch=$(uname -a | grep -o "x86_64" | head -n1)
 set -e
 [ ! "$arch" = "x86_64" ] && arch=i686
-iso=latest-iso-minimal-$arch-linux
+iso=nixos-minimal-16.09.680.4e14fd5-${arch}-linux.iso
 minimal_space=3
 graphical_space=5
 required_space=$minimal_space
@@ -120,7 +120,7 @@ pushd "$working_directory"
   log "Downloading NixOS $iso"
   mkdir -p mnt host/nix
 
-  wget -c http://nixos.org/releases/nixos/$iso
+  wget -c https://d3g5gsiof5omrk.cloudfront.net/nixos/16.09/nixos-16.09.680.4e14fd5/$iso
 
   log "Extracting ISO"
   modprobe loop
