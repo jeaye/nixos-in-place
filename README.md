@@ -130,7 +130,7 @@ sane, allow you to configure some options, and then pull down the latest ISO
 from NixOS. It them enters Stage 1.
 
 ### Stage 1
-Once we have the NixOS live CD ISO, we mount is locally and modify it. The
+Once we have the NixOS live CD ISO, we mount it locally and modify it. The
 modifications enable us to imbue the image with a chroot that runs Stage 2.
 Before we chroot, we bind in a number of the host's devices and files into the
 chroot environment to ensure that functionality like networking will work.
