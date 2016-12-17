@@ -16,7 +16,7 @@ log "Setting up chroot networking"
 cd host
 mkdir -p etc dev proc sys
 cp /etc/resolv.conf etc/external-resolv.conf
-for fn in dev proc sys; do mount --bind "/$fn" "$fn"; done
+for fn in dev dev/shm dev/pts proc sys; do mount --bind "/$fn" "$fn"; done
 
 ## Patch the ISO for local chroot
 log_start "Looking for NixOS init... "
