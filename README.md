@@ -142,7 +142,7 @@ bound to the host's `/nixos`. NixOS then installs GRUB and we're good to reboot
 into our new machine!
 
 ## Donate
-Feel free to shoot Bitcoins my way: **1HaMvpDjy7QJBDkcZALJr3s26FxLpv5WtJ**
+Feel free to shoot Bitcoins my way: **17MvLhuxbziLHCWsbFqaSdqwu7jXY1jz4A**
 
 For more information regarding how I use donations, see
 [here](http://jeaye.com/donate/).
