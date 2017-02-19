@@ -18,6 +18,7 @@ check_existence "grep"
 check_existence "unsquashfs"
 check_existence "mktemp"
 check_existence "id"
+check_existence "sha256sum"
 log_end "seems sane"
 
 ## Setup essential variables; allow overriding with input
@@ -120,7 +121,12 @@ pushd "$working_directory"
   log "Downloading NixOS $iso"
   mkdir -p mnt host/nix
 
-  wget -c https://d3g5gsiof5omrk.cloudfront.net/nixos/16.09/nixos-16.09.680.4e14fd5/$iso
+  url=https://d3g5gsiof5omrk.cloudfront.net/nixos/16.09/nixos-16.09.680.4e14fd5
+  wget -c $url/$iso
+
+  log "Validating checksum"
+  wget -c $url/$iso.sha256
+  sha256sum -c <(echo "$(cat $iso.sha256) $iso")
 
   log "Extracting ISO"
   modprobe loop
@@ -129,7 +135,7 @@ pushd "$working_directory"
   umount mnt
   rm -rf ./mnt
 
-  ## Save one space
+  ## Save some space
   rm -f ./$iso
 
   ## Setup the chroot environment before install
