@@ -3,3 +3,4 @@
 /latest-iso-graphical-x86_64-linux
 /nixos-in-place-test
 .vagrant
+*.iso

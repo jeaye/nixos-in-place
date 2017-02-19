@@ -20,7 +20,7 @@ show_help()
   log "usage: $0 [OPTION...]"
   log
   log "  -h         Show this help message"
-  log "  -g <dev>   Set GRUB target device (default: ${grub_device:-undefined})"
+  log "  -g <dev>   Set boot device (a device with MBR or EFI System Partition) (default: ${boot_device:-undefined})"
   log "  -r <dev>   Set root filesystem target device (default: ${root_mount:-undefined})"
   log "  -t <type>  Set root filesystem type (default: ${root_type:-undefined})"
   log "  -G         Use the graphical NixOS ISO (default: ${iso:-undefined})"

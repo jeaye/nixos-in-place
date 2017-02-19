@@ -5,9 +5,10 @@ set -eu
 here=$1
 root_mount=$2
 root_type=$3
-grub_device=$4
-digitalocean=$5
-extra_config=$6
+boot_type=$4
+boot_device=$5
+digitalocean=$6
+extra_config=$7
 
 ## Bring in some helper functions
 . "$here/util"
@@ -29,7 +30,7 @@ log_end "$BASH"
 
 ## Don't run systemd on chroot start, run our stage2 script
 log "Patching init"
-sed -i "s,exec systemd,exec /$BASH -i /nixos-in-place/stage2 $root_mount $root_type $grub_device $digitalocean," "$INIT"
+sed -i "s,exec systemd,exec /$BASH -i /nixos-in-place/stage2 $root_mount $root_type $boot_type $boot_device $digitalocean," "$INIT"
 sed -i "s,starting systemd,starting /nixos-in-place/stage2," "$INIT"
 
 ## Don't try to remount / since we didn't do a proper phase 1
@@ -44,6 +45,19 @@ mount --bind /nixos nixos
 mkdir -p nixos-in-place
 mount --bind "$here" nixos-in-place
 
+case "$boot_type" in
+  mbr)
+    true
+    ;;
+  uefi)
+    (ls -1 /sys/firmware/efi/efivars | grep -q .) || mount -t efivarfs efivarfs /sys/firmware/efi/efivars
+    mkdir -p nixos/boot
+    mount "$boot_device" nixos/boot
+    ;;
+  *)
+    echo "bad boot type" >&2
+    exit 1
+esac
 ## Copy extra config, if it exists
 if [ ! "$extra_config"x = "x" ];
 then
@@ -56,6 +70,7 @@ chroot . "/$INIT"
 
 ## Various platforms use different flags; just try what we can to clean up
 log "Cleaning up mounts"
+umount -f nixos/boot >/dev/null 2>&1 || true
 umount -fR nixos >/dev/null 2>&1 || true
 umount -f nixos >/dev/null 2>&1 || true
 umount -f nixos-in-place >/dev/null 2>&1 || true
