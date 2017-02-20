@@ -87,5 +87,5 @@ mv $nixos_dir/hardware-configuration.nix $nixos_dir/backup-hardware-configuratio
 pcregrep -Mv "fileSystems.\"/\"[\s\S]*};" $nixos_dir/backup-hardware-configuration.nix > $nixos_dir/hardware-configuration.nix
 
 ## Installs grub and a base NixOS system; after a reboot, we're golden
-NIXOS_INSTALL_REEXEC=1 nixos-install --root /nixos --show-trace --no-root-password
+NIXOS_INSTALL_REEXEC=1 nixos-install --root /nixos --show-trace --no-root-passwd
 exit
