@@ -16,7 +16,11 @@ environment.etc =
       #!/run/current-system/sw/bin/bash
       set -eu
 
-      [ ! -d /old-root ] && exit
+      if [ ! -d /old-root ];
+      then
+        echo "/old-root isn't present; ditching"
+        exit
+      fi
       cp -vrf /old-root/home/vagrant/.ssh /home/vagrant/
       chown -R vagrant:users /home/vagrant
     '';
