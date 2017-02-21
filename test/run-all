@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -eux
+
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+pushd "$here"
+  rm -f extra-config
+  sed "s#XXX#$(cat ~/.ssh/id_rsa.pub)#" < extra-config-template > extra-config
+
+  for file in $(find . -name 'Vagrantfile' -type f);
+  do
+    pushd $(dirname $file)
+      # Provide a clean slate
+      vagrant destroy -f
+
+      # Install NixOS
+      vagrant up --provision
+
+      # Force reboot
+      vagrant reload
+    popd
+  done
+popd
