@@ -70,7 +70,7 @@ $ pacman -Sy wget squashfs-tools git
 ### CentOS 7
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
-$ yum install wget squashfs-tools
+$ yum -y install wget squashfs-tools git
 ```
 
 ### Fedora 23
