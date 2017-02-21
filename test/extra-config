@@ -5,17 +5,27 @@ users.users.vagrant =
   createHome = true;
 };
 
-system.activationScripts =
+environment.etc =
 {
-  vagrant =
+  "setup-vagrant" =
   {
-    deps = [];
     text =
     ''
-      cp -rf /home/vagrant/.ssh /home/vagrant/
+      #!/run/current-system/sw/bin/bash
+      set -eu
+
+      [ ! -d /old-root ] && exit
+      cp -rf /old-root/home/vagrant/.ssh /home/vagrant/
       chown -R vagrant:users /home/vagrant
     '';
+    mode = "0774";
   };
+};
+
+systemd.services.vagrant-ssh =
+{
+  wantedBy = [ "multi-user.target" ];
+  serviceConfig.ExecStart = "/etc/setup-vagrant";
 };
 
 services.openssh =
