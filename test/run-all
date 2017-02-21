@@ -5,9 +5,6 @@ set -eux
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 pushd "$here"
-  rm -f extra-config
-  sed "s#XXX#$(cat ~/.ssh/id_rsa.pub)#" < extra-config-template > extra-config
-
   for file in $(find . -name 'Vagrantfile' -type f);
   do
     pushd $(dirname $file)
@@ -15,13 +12,13 @@ pushd "$here"
       vagrant destroy -f
 
       # Install NixOS
-      vagrant up --provision
+      vagrant up --provision || true
 
       # Force reboot
       vagrant reload
 
       # Verify the success
-      uname=$(ssh -p 2222 -o StrictHostKeyChecking=False vagrant@localhost "uname -a")
+      uname=$(printf "uname -a\nexit\n" | vagrant ssh | tail -n1)
       if ! grep "NixOS" <<< $uname >/dev/null;
       then
         echo "Expected NixOS, found: $uname"

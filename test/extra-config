@@ -3,8 +3,21 @@ users.users.vagrant =
   isNormalUser = true;
   home = "/home/vagrant";
   createHome = true;
-  openssh.authorizedKeys.keys = [ "XXX" ];
 };
+
+system.activationScripts =
+{
+  vagrant =
+  {
+    deps = [];
+    text =
+    ''
+      cp -rf /old-root/home/vagrant/.ssh /home/vagrant/
+      chown -R vagrant:users /home/vagrant
+    '';
+  };
+};
+
 services.openssh =
 {
   enable = true;
