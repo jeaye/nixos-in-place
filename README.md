@@ -96,7 +96,7 @@ live media. If you're on a machine with less RAM, such as a VPS with 512MB, you
 can quickly make a swap file for the install.
 
 ```bash
-$ dd if=/dev/zero of=swap bs=1M count=512
+$ dd if=/dev/zero of=swap bs=1M count=1024
 $ mkswap ./swap
 $ chmod 600 ./swap
 $ swapon ./swap
