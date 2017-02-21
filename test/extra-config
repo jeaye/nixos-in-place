@@ -24,7 +24,7 @@ environment.etc =
   };
 };
 
-systemd.services.vagrant-ssh =
+systemd.services.setup-vagrant =
 {
   wantedBy = [ "network.target" ];
   after = [ "multi-user.target" ];
