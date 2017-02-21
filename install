@@ -40,7 +40,17 @@ set +e
   arch=$(uname -a | grep -o "x86_64" | head -n1)
 set -e
 [ ! "$arch" = "x86_64" ] && arch=i686
-iso=nixos-minimal-16.09.680.4e14fd5-${arch}-linux.iso
+
+primary_version=16.09
+secondary_version=680.4e14fd5
+full_version=$primary_version.$secondary_version
+minimal_iso=nixos-minimal-$full_version-${arch}-linux.iso
+graphical_iso=nixos-graphical-$full_version-${arch}-linux.iso
+iso=$minimal_iso
+minimal_checksum=8700fd1861e83dba0c3c2cb348099d2499b2c52844d1771f1aacbf7458990bc8
+graphical_checksum=f1144de2645b1d099035416cb335e33cb56fdf71c8f8900c75a6a91ac2f49464
+checksum=$minimal_checksum
+
 minimal_space=3
 graphical_space=5
 required_space=$minimal_space
@@ -59,8 +69,9 @@ while getopts ":g:r:t:Gdw:c:h" opt; do
       root_type=$OPTARG
       ;;
     G)
-      iso=latest-iso-graphical-$arch-linux
+      iso=$graphical_iso
       required_space=$graphical_space
+      checksum=$graphical_checksum
       ;;
     d)
       digitalocean=true
@@ -131,12 +142,12 @@ pushd "$working_directory"
   log "Downloading NixOS $iso"
   mkdir -p mnt host/nix
 
-  url=https://d3g5gsiof5omrk.cloudfront.net/nixos/16.09/nixos-16.09.680.4e14fd5
+  url=https://d3g5gsiof5omrk.cloudfront.net/nixos/$primary_version/nixos-$full_version
   wget -c $url/$iso
 
+  # From $url/$iso.sha256
   log "Validating checksum"
-  wget -c $url/$iso.sha256
-  sha256sum -c <(echo "$(cat $iso.sha256) $iso")
+  sha256sum -c <(echo "$checksum $iso")
 
   log "Extracting ISO"
   modprobe loop
