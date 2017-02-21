@@ -3,8 +3,9 @@ users.users.vagrant =
   isNormalUser = true;
   home = "/home/vagrant";
   createHome = true;
-  extraGroups = [ "wheel" ];
+  extraGroups = [ "wheel" "vagrant" ];
 };
+users.groups.vagrant = {};
 
 environment.etc =
 {
