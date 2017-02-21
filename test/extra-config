@@ -17,7 +17,7 @@ environment.etc =
       set -eu
 
       [ ! -d /old-root ] && exit
-      cp -rf /old-root/home/vagrant/.ssh /home/vagrant/
+      cp -vrf /old-root/home/vagrant/.ssh /home/vagrant/
       chown -R vagrant:users /home/vagrant
     '';
     mode = "0774";
