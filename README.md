@@ -52,19 +52,19 @@ access to your install part-way through. Seriously, use tmux or screen.
 ### Ubuntu 15.10
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
-$ apt-get install -y squashfs-tools
+$ apt-get install -y squashfs-tools git
 ```
 
 ### Debian 8.2
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
-$ apt-get install -y squashfs-tools
+$ apt-get install -y squashfs-tools git
 ```
 
 ### Arch
 See [tmpfs](https://github.com/jeaye/nixos-in-place#tmpfs).
 ```bash
-$ pacman -Sy wget squashfs-tools
+$ pacman -Sy wget squashfs-tools git
 ```
 
 ### CentOS 7
@@ -77,7 +77,7 @@ $ yum install wget squashfs-tools
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm) and
 [tmpfs](https://github.com/jeaye/nixos-in-place#tmpfs).
 ```bash
-$ dnf install squashfs-tools
+$ dnf -y install wget squashfs-tools git
 ```
 
 ### Slackware 14.1 (and -current)
