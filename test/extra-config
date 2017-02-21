@@ -24,7 +24,8 @@ environment.etc =
 
 systemd.services.vagrant-ssh =
 {
-  wantedBy = [ "multi-user.target" ];
+  wantedBy = [ "network.target" ];
+  after = [ "multi-user.target" ];
   serviceConfig.ExecStart = "/etc/setup-vagrant";
 };
 
