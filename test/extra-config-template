@@ -1,0 +1,15 @@
+users.users.vagrant =
+{
+  isNormalUser = true;
+  home = "/home/vagrant";
+  createHome = true;
+  openssh.authorizedKeys.keys = [ "XXX" ];
+};
+services.openssh =
+{
+  enable = true;
+  forwardX11 = false;
+  permitRootLogin = "no";
+  ports = [22];
+};
+networking.firewall.allowedTCPPorts = [ 22 ];
