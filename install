@@ -24,11 +24,11 @@ log_end "seems sane"
 ## Setup essential variables; allow overriding with input
 root_mount=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
 root_type=$(mount | grep -Eo "/ type \w+" | sed 's/ /\n/g' | tail -n1)
-if grep '/dev/nvme' <<< $root_mount; then
+if grep '/dev/nvme' <<< $root_mount >/dev/null; then
   grub_device=$(echo $root_mount | sed "s|p[0-9]\+$||");
-elif grep '/dev/sd' <<< $root_mount; then
+elif grep '/dev/sd' <<< $root_mount >/dev/null; then
   grub_device=$(echo $root_mount | sed "s|[0-9]\+||");
-elif grep '/dev/vd' <<< $root_mount; then
+elif grep '/dev/vd' <<< $root_mount >/dev/null; then
   grub_device=$(echo $root_mount | sed "s|[0-9]\+||");
 else
   echo "Unable to determine your grub boot device! Please specify with the -g option."
@@ -44,9 +44,10 @@ iso=nixos-minimal-16.09.680.4e14fd5-${arch}-linux.iso
 minimal_space=3
 graphical_space=5
 required_space=$minimal_space
+extra_config=$(readlink -f no-extra-config)
 digitalocean=false
 
-while getopts ":g:r:t:Gdw:h" opt; do
+while getopts ":g:r:t:Gdw:c:h" opt; do
   case $opt in
     g)
       grub_device=$OPTARG
@@ -66,6 +67,14 @@ while getopts ":g:r:t:Gdw:h" opt; do
       ;;
     w)
       working_directory=$OPTARG
+      ;;
+    c)
+      extra_config=$(readlink -f $OPTARG)
+      if [ ! -f $extra_config ];
+      then
+        log "ERROR extra config file missing: $extra_config" >&2
+        exit 1
+      fi
       ;;
     h)
       show_help "$0"
@@ -108,6 +117,7 @@ log "   Root => $root_mount ($root_type)"
 log "   ISO => $iso"
 log "   Digital Ocean => $digitalocean"
 log "   Working directory => $working_directory"
+log "   Extra config => $extra_config"
 log_start "Continue? [yn] "
 read -n 1 -r
 log_end
@@ -140,7 +150,7 @@ pushd "$working_directory"
 
   ## Setup the chroot environment before install
   log "Embarking stage1!"
-  "$here/stage1" "$here" "$root_mount" "$root_type" "$grub_device" "$digitalocean"
+  "$here/stage1" "$here" "$root_mount" "$root_type" "$grub_device" "$digitalocean" "$extra_config"
 
   ## Minimize residual space usage
   # /var/empty is immutable https://github.com/NixOS/nixpkgs/pull/18365

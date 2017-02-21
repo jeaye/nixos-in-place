@@ -7,6 +7,7 @@ root_mount=$2
 root_type=$3
 grub_device=$4
 digitalocean=$5
+extra_config=$6
 
 ## Bring in some helper functions
 . "$here/util"
@@ -42,6 +43,12 @@ mount --bind /nixos nixos
 ## Allow stage2 to access these scripts
 mkdir -p nixos-in-place
 mount --bind "$here" nixos-in-place
+
+## Copy extra config, if it exists
+if [ ! "$extra_config"x = "x" ];
+then
+  cp -f "$extra_config" /nixos/extra-config
+fi
 
 ## Imbue the modified live CD environment so we can install
 log "Embarking stage2!"
