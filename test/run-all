@@ -19,6 +19,14 @@ pushd "$here"
 
       # Force reboot
       vagrant reload
+
+      # Verify the success
+      uname=$(ssh -p 2222 -o StrictHostKeyChecking=False vagrant@localhost "uname -a")
+      if ! grep "NixOS" <<< $uname >/dev/null;
+      then
+        echo "Expected NixOS, found: $uname"
+        exit 1
+      fi
     popd
   done
 popd
