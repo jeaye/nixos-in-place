@@ -3,6 +3,7 @@ users.users.vagrant =
   isNormalUser = true;
   home = "/home/vagrant";
   createHome = true;
+  extraGroups = [ "wheel" ];
 };
 
 environment.etc =
@@ -37,3 +38,6 @@ services.openssh =
   ports = [22];
 };
 networking.firewall.allowedTCPPorts = [ 22 ];
+
+security.sudo.enable = true;
+security.sudo.wheelNeedsPassword = false;
