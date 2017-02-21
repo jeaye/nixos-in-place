@@ -12,7 +12,7 @@ system.activationScripts =
     deps = [];
     text =
     ''
-      cp -rf /old-root/home/vagrant/.ssh /home/vagrant/
+      cp -rf /home/vagrant/.ssh /home/vagrant/
       chown -R vagrant:users /home/vagrant
     '';
   };
