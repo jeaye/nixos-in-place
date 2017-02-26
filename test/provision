@@ -13,7 +13,7 @@ function kill_swap
 function make_swap
 {
   [ -f $swap ] && return
-  dd if=/dev/zero of=swap bs=1M count=1024
+  dd if=/dev/zero of=$swap bs=1M count=1024
   mkswap $swap
   chmod 600 $swap
   swapon $swap
