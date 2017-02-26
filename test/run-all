@@ -5,7 +5,7 @@ set -eu
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 pushd "$here"
-  for file in $(find . -name 'Vagrantfile' -type f);
+  for file in $(find . -name 'Vagrantfile' -type f ! -path './not-working/*');
   do
     pushd $(dirname $file)
       # Provide a clean slate
