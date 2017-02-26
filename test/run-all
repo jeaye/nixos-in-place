@@ -24,6 +24,9 @@ pushd "$here"
         echo "Expected NixOS, found: $uname"
         exit 1
       fi
+
+      # No need for it to be running anymore
+      vagrant halt
     popd
   done
 popd
