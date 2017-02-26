@@ -18,20 +18,47 @@ check_existence "grep"
 check_existence "unsquashfs"
 check_existence "mktemp"
 check_existence "id"
+check_existence "head"
+check_existence "tail"
+check_existence "fdisk"
+check_existence "cat"
 check_existence "sha256sum"
 log_end "seems sane"
 
 ## Setup essential variables; allow overriding with input
 root_mount=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
 root_type=$(mount | grep -Eo "/ type \w+" | sed 's/ /\n/g' | tail -n1)
-if grep '/dev/nvme' <<< $root_mount >/dev/null; then
-  grub_device=$(echo $root_mount | sed "s|p[0-9]\+$||");
-elif grep '/dev/sd' <<< $root_mount >/dev/null; then
-  grub_device=$(echo $root_mount | sed "s|[0-9]\+||");
-elif grep '/dev/vd' <<< $root_mount >/dev/null; then
-  grub_device=$(echo $root_mount | sed "s|[0-9]\+||");
+
+expect_one_line() {
+  ERROR_MESSAGE_ZERO=$1
+  ERROR_MESSAGE_MULTIPLE=$2
+  (set -eu;
+   IFS='' read -r x || (echo "$ERROR_MESSAGE_ZERO" >& 2; exit 1)
+   (! IFS='' read -r) || (echo "$ERROR_MESSAGE_MULTIPLE" >& 2; exit 1)
+   printf "%s\n" "$x");
+}
+
+if [ -d /sys/firmware/efi ]; then
+  boot_type=uefi
+  boot_device=$(
+    set -euo pipefail
+    fdisk -l -o 'Device,Type' |
+      grep 'EFI System' |
+      sed -r 's_([^ ]*) *EFI System$_\1_' |
+      expect_one_line \
+	"Fdisk found no EFI System Partitions: please specify with -g option" \
+	"Found multiple EFI System Partitions: please specify with -g option")
 else
-  echo "Unable to determine your grub boot device! Please specify with the -g option."
+  boot_type=mbr
+  if grep '/dev/nvme' <<< "$root_mount" >/dev/null; then
+    boot_device=$(echo "$root_mount" | sed "s|p[0-9]\+$||");
+  elif grep '/dev/sd' <<< "$root_mount" >/dev/null; then
+    boot_device=$(echo "$root_mount" | sed "s|[0-9]\+||");
+  elif grep '/dev/vd' <<< "$root_mount" >/dev/null; then
+    boot_device=$(echo "$root_mount" | sed "s|[0-9]\+||");
+  else
+    echo "Unable to determine your grub boot device! Please specify with the -g option."
+  fi
 fi
 working_directory=$(mktemp -d)
 
@@ -60,7 +87,7 @@ digitalocean=false
 while getopts ":g:r:t:Gdw:c:h" opt; do
   case $opt in
     g)
-      grub_device=$OPTARG
+      boot_device=$OPTARG
       ;;
     r)
       root_mount=$OPTARG
@@ -121,9 +148,22 @@ then
   fi
 fi
 
+boot_description=$(
+  case $boot_type in
+    uefi)
+      echo "uefi boot with esp at $boot_device"
+      ;;
+    mbr)
+      echo "mbr at $boot_device"
+      ;;
+    *)
+      echo "bad boot type" >&2
+      exit 1
+      ;;
+  esac)
 ## Give one last chance to back out
 log "NixOS installer (nixos-in-place)"
-log "   GRUB => $grub_device"
+log "   Boot => $boot_description"
 log "   Root => $root_mount ($root_type)"
 log "   ISO => $iso"
 log "   Digital Ocean => $digitalocean"
@@ -161,7 +201,7 @@ pushd "$working_directory"
 
   ## Setup the chroot environment before install
   log "Embarking stage1!"
-  "$here/stage1" "$here" "$root_mount" "$root_type" "$grub_device" "$digitalocean" "$extra_config"
+  "$here/stage1" "$here" "$root_mount" "$root_type" "$boot_type" "$boot_device" "$digitalocean" "$extra_config"
 
   ## Minimize residual space usage
   # /var/empty is immutable https://github.com/NixOS/nixpkgs/pull/18365

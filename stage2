@@ -4,8 +4,9 @@ set -eu
 
 root_mount=$1
 root_type=$2
-grub_device=$3
-digitalocean=$4
+boot_type=$3
+boot_device=$4
+digitalocean=$5
 digitalocean_configs=""
 
 if [ "$digitalocean" = "true" ];
@@ -47,12 +48,26 @@ nix-env -i pcre
 ## Generate a base config
 nixos-generate-config --root /nixos
 
+grub_device_config=$(
+  case "$boot_type" in
+    mbr)
+      echo "boot.loader.grub.device = \"$boot_device\";\n"
+      ;;
+    uefi)
+      true
+      ;;
+    *)
+      echo "bad boot type" >&2
+      exit 1
+      ;;
+  esac)
+
 cat <<EOF > /nixos/etc/nixos/nixos-in-place.nix
 { config, pkgs, ... }:
 {
   ## Everything below is generated from nixos-in-place; modify with caution!
   boot.kernelParams = ["boot.shell_on_fail"];
-  boot.loader.grub.device = "$grub_device";
+  $grub_device_config
   boot.loader.grub.storePath = "/nixos/nix/store";
   boot.initrd.supportedFilesystems = [ "$root_type" ];
   boot.initrd.postDeviceCommands = ''
