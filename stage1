@@ -8,6 +8,7 @@ root_type=$3
 boot_type=$4
 boot_device=$5
 digitalocean=$6
+extra_config=$7
 
 ## Bring in some helper functions
 . "$here/util"
@@ -57,6 +58,12 @@ case "$boot_type" in
     echo "bad boot type" >&2
     exit 1
 esac
+
+## Copy extra config, if it exists
+if [ ! "$extra_config"x = "x" ];
+then
+  cp -f "$extra_config" /nixos/extra-config
+fi
 
 ## Imbue the modified live CD environment so we can install
 log "Embarking stage2!"

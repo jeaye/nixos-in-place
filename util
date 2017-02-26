@@ -24,6 +24,7 @@ show_help()
   log "  -r <dev>   Set root filesystem target device (default: ${root_mount:-undefined})"
   log "  -t <type>  Set root filesystem type (default: ${root_type:-undefined})"
   log "  -G         Use the graphical NixOS ISO (default: ${iso:-undefined})"
+  log "  -c         Set extra Nix config file (default: ${extra_config:-undefined})"
   log "  -d         Prepare for use with Digital Ocean (default: ${digitalocean:-undefined})"
   log "  -w <dir>   Specify the working directory (default: random in /tmp)"
   exit 1

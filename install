@@ -22,6 +22,7 @@ check_existence "head"
 check_existence "tail"
 check_existence "fdisk"
 check_existence "cat"
+check_existence "sha256sum"
 log_end "seems sane"
 
 ## Setup essential variables; allow overriding with input
@@ -49,11 +50,11 @@ if [ -d /sys/firmware/efi ]; then
 	"Found multiple EFI System Partitions: please specify with -g option")
 else
   boot_type=mbr
-  if grep '/dev/nvme' <<< "$root_mount"; then
+  if grep '/dev/nvme' <<< "$root_mount" >/dev/null; then
     boot_device=$(echo "$root_mount" | sed "s|p[0-9]\+$||");
-  elif grep '/dev/sd' <<< "$root_mount"; then
+  elif grep '/dev/sd' <<< "$root_mount" >/dev/null; then
     boot_device=$(echo "$root_mount" | sed "s|[0-9]\+||");
-  elif grep '/dev/vd' <<< "$root_mount"; then
+  elif grep '/dev/vd' <<< "$root_mount" >/dev/null; then
     boot_device=$(echo "$root_mount" | sed "s|[0-9]\+||");
   else
     echo "Unable to determine your grub boot device! Please specify with the -g option."
@@ -66,13 +67,24 @@ set +e
   arch=$(uname -a | grep -o "x86_64" | head -n1)
 set -e
 [ ! "$arch" = "x86_64" ] && arch=i686
-iso=nixos-minimal-16.09.680.4e14fd5-${arch}-linux.iso
+
+primary_version=16.09
+secondary_version=680.4e14fd5
+full_version=$primary_version.$secondary_version
+minimal_iso=nixos-minimal-$full_version-${arch}-linux.iso
+graphical_iso=nixos-graphical-$full_version-${arch}-linux.iso
+iso=$minimal_iso
+minimal_checksum=8700fd1861e83dba0c3c2cb348099d2499b2c52844d1771f1aacbf7458990bc8
+graphical_checksum=f1144de2645b1d099035416cb335e33cb56fdf71c8f8900c75a6a91ac2f49464
+checksum=$minimal_checksum
+
 minimal_space=3
 graphical_space=5
 required_space=$minimal_space
+extra_config=$(readlink -f no-extra-config)
 digitalocean=false
 
-while getopts ":g:r:t:Gdw:h" opt; do
+while getopts ":g:r:t:Gdw:c:h" opt; do
   case $opt in
     g)
       boot_device=$OPTARG
@@ -84,14 +96,23 @@ while getopts ":g:r:t:Gdw:h" opt; do
       root_type=$OPTARG
       ;;
     G)
-      iso=latest-iso-graphical-$arch-linux
+      iso=$graphical_iso
       required_space=$graphical_space
+      checksum=$graphical_checksum
       ;;
     d)
       digitalocean=true
       ;;
     w)
       working_directory=$OPTARG
+      ;;
+    c)
+      extra_config=$(readlink -f $OPTARG)
+      if [ ! -f $extra_config ];
+      then
+        log "ERROR extra config file missing: $extra_config" >&2
+        exit 1
+      fi
       ;;
     h)
       show_help "$0"
@@ -147,6 +168,7 @@ log "   Root => $root_mount ($root_type)"
 log "   ISO => $iso"
 log "   Digital Ocean => $digitalocean"
 log "   Working directory => $working_directory"
+log "   Extra config => $extra_config"
 log_start "Continue? [yn] "
 read -n 1 -r
 log_end
@@ -160,7 +182,12 @@ pushd "$working_directory"
   log "Downloading NixOS $iso"
   mkdir -p mnt host/nix
 
-  wget -c https://d3g5gsiof5omrk.cloudfront.net/nixos/16.09/nixos-16.09.680.4e14fd5/$iso
+  url=https://d3g5gsiof5omrk.cloudfront.net/nixos/$primary_version/nixos-$full_version
+  wget -c $url/$iso
+
+  # From $url/$iso.sha256
+  log "Validating checksum"
+  sha256sum -c <(echo "$checksum $iso")
 
   log "Extracting ISO"
   modprobe loop
@@ -169,12 +196,12 @@ pushd "$working_directory"
   umount mnt
   rm -rf ./mnt
 
-  ## Save one space
+  ## Save some space
   rm -f ./$iso
 
   ## Setup the chroot environment before install
   log "Embarking stage1!"
-  "$here/stage1" "$here" "$root_mount" "$root_type" "$boot_type" "$boot_device" "$digitalocean"
+  "$here/stage1" "$here" "$root_mount" "$root_type" "$boot_type" "$boot_device" "$digitalocean" "$extra_config"
 
   ## Minimize residual space usage
   # /var/empty is immutable https://github.com/NixOS/nixpkgs/pull/18365
@@ -184,6 +211,6 @@ popd
 
 ## Installation is complete
 log_start "Reboot into NixOS now? [yn] "
-read -n 1 -r
+read -n 1 -r || REPLY=n
 log_end
 [[ $REPLY =~ ^[Yy]$ ]] && reboot

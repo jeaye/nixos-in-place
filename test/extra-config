@@ -1,0 +1,48 @@
+users.users.vagrant =
+{
+  isNormalUser = true;
+  home = "/home/vagrant";
+  createHome = true;
+  extraGroups = [ "wheel" "vagrant" ];
+};
+users.groups.vagrant = {};
+
+environment.etc =
+{
+  "setup-vagrant" =
+  {
+    text =
+    ''
+      #!/run/current-system/sw/bin/bash
+      set -eu
+
+      if [ ! -d /old-root ];
+      then
+        echo "/old-root isn't present; ditching"
+        exit
+      fi
+      cp -vrf /old-root/home/vagrant/.ssh /home/vagrant/
+      chown -R vagrant:users /home/vagrant
+    '';
+    mode = "0774";
+  };
+};
+
+systemd.services.setup-vagrant =
+{
+  wantedBy = [ "network.target" ];
+  after = [ "multi-user.target" ];
+  serviceConfig.ExecStart = "/etc/setup-vagrant";
+};
+
+services.openssh =
+{
+  enable = true;
+  forwardX11 = false;
+  permitRootLogin = "no";
+  ports = [22];
+};
+networking.firewall.allowedTCPPorts = [ 22 ];
+
+security.sudo.enable = true;
+security.sudo.wheelNeedsPassword = false;

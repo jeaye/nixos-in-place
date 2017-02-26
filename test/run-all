@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -eu
+
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+pushd "$here"
+  for file in $(find . -name 'Vagrantfile' -type f ! -path './not-working/*');
+  do
+    pushd $(dirname $file)
+      # Provide a clean slate
+      vagrant destroy -f
+
+      # Install NixOS
+      vagrant up --provision || true
+
+      # Force reboot
+      vagrant reload
+
+      # Verify the success
+      uname=$(printf "uname -a\nexit\n" | vagrant ssh | tail -n1)
+      if ! grep "NixOS" <<< $uname >/dev/null;
+      then
+        echo "Expected NixOS, found: $uname"
+        exit 1
+      fi
+
+      # No need for it to be running anymore
+      vagrant halt
+    popd
+  done
+popd

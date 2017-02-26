@@ -20,7 +20,9 @@ Ocean](https://github.com/jeaye/nixos-in-place#digital-ocean) droplets!
 3. **STOP AND VERIFY**, then hit `y` to confirm
 4. Grab some coffee while NixOS installs
 5. Type in your new root password
-6. Hit `y` to reboot into NixOS!
+6. Hit `y` to reboot into NixOS! (root's password will be 'nixos')
+7. Remove hard-coded password from `/nixos/etc/nixos/nixos-in-place.nix` and set
+   one manually
 
 ## What you get
 A fresh install of NixOS, either minimal or graphical (your choice). Your
@@ -54,32 +56,32 @@ access to your install part-way through. Seriously, use tmux or screen.
 ### Ubuntu 15.10
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
-$ apt-get install -y squashfs-tools
+$ apt-get install -y squashfs-tools git
 ```
 
 ### Debian 8.2
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
-$ apt-get install -y squashfs-tools
+$ apt-get install -y squashfs-tools git
 ```
 
 ### Arch
 See [tmpfs](https://github.com/jeaye/nixos-in-place#tmpfs).
 ```bash
-$ pacman -Sy wget squashfs-tools
+$ pacman -Sy wget squashfs-tools git
 ```
 
 ### CentOS 7
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
-$ yum install wget squashfs-tools
+$ yum -y install wget squashfs-tools git
 ```
 
 ### Fedora 23
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm) and
 [tmpfs](https://github.com/jeaye/nixos-in-place#tmpfs).
 ```bash
-$ dnf install squashfs-tools
+$ dnf -y install wget squashfs-tools git
 ```
 
 ### Slackware 14.1 (and -current)
@@ -98,7 +100,7 @@ live media. If you're on a machine with less RAM, such as a VPS with 512MB, you
 can quickly make a swap file for the install.
 
 ```bash
-$ dd if=/dev/zero of=swap bs=1M count=512
+$ dd if=/dev/zero of=swap bs=1M count=1024
 $ mkswap ./swap
 $ chmod 600 ./swap
 $ swapon ./swap

@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -eu
+
+swap=./swap
+
+function kill_swap
+{
+  [ -f $swap ] && swapoff $swap
+  rm -f $swap
+}
+
+function make_swap
+{
+  [ -f $swap ] && return
+  dd if=/dev/zero of=$swap bs=1M count=1024
+  mkswap $swap
+  chmod 600 $swap
+  swapon $swap
+}
+
+make_swap
+  rm -rf nixos-in-place
+  git clone -b testing https://github.com/jeaye/nixos-in-place
+  pushd nixos-in-place
+    printf 'yn' | ./install -g /dev/sda -r /dev/sda1 -c /home/vagrant/nixos-extra-config
+  popd
+kill_swap

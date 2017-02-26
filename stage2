@@ -31,7 +31,7 @@ then
   ## update each boot.
   mkdir -p /nixos/etc/network
   ln -sf /old-root/etc/network/interfaces /nixos/etc/network/
-  
+
   ## Use the original authorized_keys that DO added
   mkdir -pm 711 /root/
   mkdir -pm 700 /root/.ssh/
@@ -85,7 +85,9 @@ cat <<EOF > /nixos/etc/nixos/nixos-in-place.nix
       fsType = "$root_type";
     };
   };
+  users.extraUsers.root.password = "nixos";
   $digitalocean_configs
+  $(cat /nixos/extra-config)
 }
 EOF
 
@@ -102,5 +104,5 @@ mv $nixos_dir/hardware-configuration.nix $nixos_dir/backup-hardware-configuratio
 pcregrep -Mv "fileSystems.\"/\"[\s\S]*};" $nixos_dir/backup-hardware-configuration.nix > $nixos_dir/hardware-configuration.nix
 
 ## Installs grub and a base NixOS system; after a reboot, we're golden
-NIXOS_INSTALL_REEXEC=1 nixos-install --root /nixos --show-trace
+NIXOS_INSTALL_REEXEC=1 nixos-install --root /nixos --show-trace --no-root-passwd
 exit
