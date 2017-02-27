@@ -21,6 +21,10 @@ check_existence "id"
 check_existence "sha256sum"
 log_end "seems sane"
 
+if [ -d /sys/firmware/efi ]; then
+  echo "UEFI systems are not supported yet. See issue #30 on github." >& 2
+  exit 1
+fi
 ## Setup essential variables; allow overriding with input
 root_mount=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
 root_type=$(mount | grep -Eo "/ type \w+" | sed 's/ /\n/g' | tail -n1)
