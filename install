@@ -21,10 +21,12 @@ check_existence "id"
 check_existence "sha256sum"
 log_end "seems sane"
 
-if [ -d /sys/firmware/efi ]; then
-  echo "UEFI systems are not supported yet. See issue #30 on github." >& 2
+if [ -d /sys/firmware/efi ];
+then
+  log "UEFI systems are not supported yet. See issue #30 on github." >&2
   exit 1
 fi
+
 ## Setup essential variables; allow overriding with input
 root_mount=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
 root_type=$(mount | grep -Eo "/ type \w+" | sed 's/ /\n/g' | tail -n1)
@@ -35,7 +37,7 @@ elif grep '/dev/sd' <<< $root_mount >/dev/null; then
 elif grep '/dev/vd' <<< $root_mount >/dev/null; then
   grub_device=$(echo $root_mount | sed "s|[0-9]\+||");
 else
-  echo "Unable to determine your grub boot device! Please specify with the -g option."
+  log "Unable to determine your grub boot device! Please specify with the -g option."
 fi
 working_directory=$(mktemp -d)
 
