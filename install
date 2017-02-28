@@ -162,9 +162,6 @@ pushd "$working_directory"
   umount mnt
   rm -rf ./mnt
 
-  ## Save some space
-  rm -f ./$iso
-
   ## Setup the chroot environment before install
   log "Embarking stage1!"
   "$here/stage1" "$here" "$root_mount" "$root_type" "$grub_device" "$digitalocean" "$extra_config"
