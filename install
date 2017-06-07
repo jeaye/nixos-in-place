@@ -25,12 +25,6 @@ check_existence "fdisk"
 check_existence "cat"
 log_end "seems sane"
 
-if [ -d /sys/firmware/efi ];
-then
-  log "UEFI systems are not supported yet. See issue #30 on github." >&2
-  exit 1
-fi
-
 ## Setup essential variables; allow overriding with input
 root_mount=$(mount | grep "/ " | sed 's/ /\n/' | head -n1)
 root_type=$(mount | grep -Eo "/ type \w+" | sed 's/ /\n/g' | tail -n1)
@@ -64,6 +58,7 @@ else
     boot_device=$(echo $root_mount | sed "s|[0-9]\+||");
   else
     log "Unable to determine your grub boot device! Please specify with the -g option."
+  fi
 fi
 working_directory=$(mktemp -d)
 
