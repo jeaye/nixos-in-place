@@ -15,7 +15,7 @@ pushd "$here"
       vagrant up --provision || true
 
       # Force reboot
-      vagrant reload
+      vagrant reload --no-provision
 
       # Verify the success
       uname=$(printf "uname -a\nexit\n" | vagrant ssh | tail -n1)
