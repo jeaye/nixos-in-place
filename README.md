@@ -143,6 +143,13 @@ that it's not a typical setup. After that, we install to `/nixos`, which is
 bound to the host's `/nixos`. NixOS then installs GRUB and we're good to reboot
 into our new machine!
 
+## Testing
+The testing suite can be run like so (requires vagrant):
+
+```bash
+$ ./test/run-all
+```
+
 ## Donate
 Feel free to shoot Bitcoins my way: **17MvLhuxbziLHCWsbFqaSdqwu7jXY1jz4A**
 
