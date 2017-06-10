@@ -21,7 +21,7 @@ function make_swap
 
 make_swap
   rm -rf nixos-in-place
-  git clone -b testing https://github.com/jeaye/nixos-in-place
+  git clone https://github.com/jeaye/nixos-in-place
   pushd nixos-in-place
     printf 'yn' | ./install -g /dev/sda -r /dev/sda1 -c /home/vagrant/nixos-extra-config
   popd
