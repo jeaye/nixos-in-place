@@ -23,6 +23,8 @@ make_swap
   rm -rf nixos-in-place
   git clone https://github.com/jeaye/nixos-in-place
   pushd nixos-in-place
-    printf 'yn' | ./install -g /dev/sda -r /dev/sda1 -c /home/vagrant/nixos-extra-config
+    printf 'yn' \
+      | ./install -g /dev/sda -r /dev/sda1 -c /home/vagrant/nixos-extra-config \
+      | grep -q 'Reboot into NixOS now'
   popd
 kill_swap

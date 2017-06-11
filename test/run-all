@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eu
+set -eux
 
 here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -12,7 +12,7 @@ pushd "$here"
       vagrant destroy -f
 
       # Install NixOS
-      vagrant up --provision || true
+      vagrant up --provision
 
       # Force reboot
       vagrant reload --no-provision
