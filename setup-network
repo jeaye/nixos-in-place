@@ -43,6 +43,10 @@ EOF
 [ -n "$eth0_enabled" ] && enable_interface enp0s3 "$eth0_address" "$eth0_prefix_length"
 [ -n "$eth1_enabled" ] && enable_interface enp0s4 "$eth1_address" "$eth1_prefix_length"
 
+# NixOS 17.09 uses newer naming
+[ -n "$eth0_enabled" ] && enable_interface ens3 "$eth0_address" "$eth0_prefix_length"
+[ -n "$eth1_enabled" ] && enable_interface ens8 "$eth1_address" "$eth1_prefix_length"
+
 enable_dns "$ns1" "$ns2" "$gateway"
 
 echo "All set!"
