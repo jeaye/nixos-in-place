@@ -149,9 +149,3 @@ The testing suite can be run like so (requires vagrant):
 ```bash
 $ ./test/run-all
 ```
-
-## Donate
-Feel free to shoot Bitcoins my way: **17MvLhuxbziLHCWsbFqaSdqwu7jXY1jz4A**
-
-For more information regarding how I use donations, see
-[here](http://jeaye.com/donate/).
