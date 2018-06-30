@@ -20,9 +20,8 @@ Ocean](https://github.com/jeaye/nixos-in-place#digital-ocean) droplets and
    ```
 3. **STOP AND VERIFY**, then hit `y` to confirm
 4. Grab some coffee while NixOS installs
-5. Type in your new root password
-6. Hit `y` to reboot into NixOS! (root's password will be 'nixos')
-7. Remove hard-coded password from `/nixos/etc/nixos/nixos-in-place.nix` and set
+5. Hit `y` to reboot into NixOS! (root's password will be 'nixos')
+6. Remove hard-coded password from `/nixos/etc/nixos/nixos-in-place.nix` and set
    one manually
 
 ## What you get
