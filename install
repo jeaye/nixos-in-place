@@ -60,7 +60,7 @@ checksum=$minimal_checksum
 minimal_space=3
 graphical_space=5
 required_space=$minimal_space
-extra_config=$(readlink -f no-extra-config)
+extra_config=$(readlink -f default-extra-config.nix)
 digitalocean=false
 
 while getopts ":g:r:t:Gdw:c:h" opt; do
