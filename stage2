@@ -70,7 +70,6 @@ cat <<EOF > /nixos/etc/nixos/nixos-in-place.nix
       fsType = "$root_type";
     };
   };
-  users.extraUsers.root.password = "nixos";
   $digitalocean_configs
   $(cat /nixos/extra-config)
 }
