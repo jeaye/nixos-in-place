@@ -50,6 +50,9 @@ nixos-generate-config --root /nixos
 cat <<EOF > /nixos/etc/nixos/nixos-in-place.nix
 { config, pkgs, ... }:
 {
+  ## You probably want to change or remove these configs.
+  $(cat /nixos/extra-config)
+
   ## Everything below is generated from nixos-in-place; modify with caution!
   boot.kernelParams = ["boot.shell_on_fail"];
   boot.loader.grub.device = "$grub_device";
@@ -70,8 +73,9 @@ cat <<EOF > /nixos/etc/nixos/nixos-in-place.nix
       fsType = "$root_type";
     };
   };
+
+  ## These settings are specified to DigitalOcean.
   $digitalocean_configs
-  $(cat /nixos/extra-config)
 }
 EOF
 
