@@ -50,10 +50,10 @@ nixos-generate-config --root /nixos
 cat <<EOF > /nixos/etc/nixos/nixos-in-place.nix
 { config, pkgs, ... }:
 {
-  ## You probably want to change or remove these configs.
+  ## You probably want to change or remove these settings.
   $(cat /nixos/extra-config)
 
-  ## Everything below is generated from nixos-in-place; modify with caution!
+  ## You probably do NOT want to change these settings.
   boot.kernelParams = ["boot.shell_on_fail"];
   boot.loader.grub.device = "$grub_device";
   boot.loader.grub.storePath = "/nixos/nix/store";
