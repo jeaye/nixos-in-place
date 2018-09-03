@@ -37,10 +37,13 @@ into `/old-root`, you can; you just need to add the GRUB entry, from
 
 ## Platform-specifics
 ### Digital Ocean
-For use on DO droplets, follow the normal steps for your platform (Debian has
-shown the best results) but add the `-d` flag to `./install` (see `-h` for more
-info). Once installed, if you clean up `/old-root`, you must keep
-`/old-root/etc/network` around; DO needs it!
+DO makes some assumptions about static ips and networking, based on the droplet
+OS and version you choose. nixos-in-place will work best from a Debian 8
+droplet.
+
+To install on a DO droplet, follow the normal steps for your platform, but add
+the `-d` flag to `./install` (see `-h` for more info). Once installed, if you
+clean up `/old-root`, you must keep `/old-root/etc/network` around; DO needs it!
 
 The default configuration for NixOS disables SSH, so you'll need to use the DO
 console, once you've finished the installation, in order to setup which services
