@@ -31,9 +31,13 @@ old system and all your old files still exist and are setup to mount on
 `/old-root/nixos` and `/` is rebound before spinning up the system; everything
 else in `/old-root` is fair game to delete.
 
-NixOS installs GRUB2 on top of your existing boot loader. If you'd like to boot
-into `/old-root`, you can; you just need to add the GRUB entry, from
+If your system boots using MBR, NixOS installs GRUB2 on top of your existing boot loader.
+If you'd like to boot into `/old-root`, you can; you just need to add the GRUB entry, from
 `/old-root/boot/grub`, manually in your Nix files.
+
+If your system boots using UEFI, NixOS adds systemd-boot efi image to your
+efi system partition, so your bios should let you choose between your old efi
+image and systemd-boot.
 
 ## Platform-specifics
 ### Digital Ocean
