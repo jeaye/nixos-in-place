@@ -23,7 +23,7 @@ log_end "seems sane"
 
 if [ -d /sys/firmware/efi ];
 then
-  log "UEFI systems are not supported yet. See issue #30 on github." >&2
+  log "UEFI systems are not supported yet. See issue #30 on github. If that doesn't work then please create an issue on our github page stating your problem." >&2
   exit 1
 fi
 
