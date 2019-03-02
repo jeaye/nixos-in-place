@@ -52,16 +52,16 @@ you'd actually like.
 I recommend installing from a tmux session, to avoid SSH timeouts and losing
 access to your install part-way through. Seriously, use tmux or screen.
 
-### Ubuntu 15.10
+### Ubuntu 18.04
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
-$ apt-get install -y squashfs-tools git
+$ sudo apt-get install -y squashfs-tools git
 ```
 
-### Debian 8.2
+### Debian 9
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
-$ apt-get install -y squashfs-tools git
+$ sudo apt-get install -y squashfs-tools git
 ```
 
 ### Arch
@@ -73,14 +73,14 @@ $ pacman -Sy wget squashfs-tools git
 ### CentOS 7
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm).
 ```bash
-$ yum -y install wget squashfs-tools git
+$ sudo yum -y install wget squashfs-tools git
 ```
 
-### Fedora 23
+### Fedora 29
 See [LVM](https://github.com/jeaye/nixos-in-place#lvm) and
 [tmpfs](https://github.com/jeaye/nixos-in-place#tmpfs).
 ```bash
-$ dnf -y install wget squashfs-tools git
+$ sudo dnf -y install wget squashfs-tools git
 ```
 
 ### Slackware 14.1 (and -current)
